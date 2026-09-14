@@ -1,0 +1,128 @@
+# Beacon Red-Green Light
+
+Light theme for Omarchy 4 Quattro, designed for protanopia and deuteranopia. Red shifts to vermilion and green to bluish-green, tuned for the protan worst case.
+
+Part of the [Beacon theme family](https://github.com/YOURNAME/omarchy-beacon-theme-family), which explains the design method,
+ships the verification tooling, and contains the other five variants.
+
+![preview](preview.png)
+
+## Install
+
+```bash
+omarchy theme install YOURNAME/omarchy-beacon-redgreen-light-theme
+omarchy theme set beacon-redgreen-light
+```
+
+## Who this is for
+
+Red and green are hard for you to tell apart. This is the most common form of colour vision deficiency by a wide margin.
+
+Not sure? The family README has a short decision guide. Short version: if you
+have never had trouble telling colours apart, use plain **Beacon Light**.
+
+## Verified numbers
+
+Background `#FAF9F6`, mode `light`.
+
+| Role | Hex | Contrast vs background | APCA Lc |
+|---|---|---|---|
+| foreground | `#2B2B28` | 13.49:1 | +97 |
+| bright_foreground | `#0F0F0E` | 18.22:1 | +102 |
+| dark_foreground | `#4E4E49` | 7.95:1 | +85 |
+| muted / comments / color8 | `#4B575E` | 7.06:1 | +82 |
+| accent | `#004188` | 9.45:1 | +89 |
+
+| ANSI | Hex | Contrast vs background |
+|---|---|---|
+| red | `#581600` | 13.04:1 |
+| green | `#00614D` | 7.08:1 |
+| yellow | `#664500` | 8.26:1 |
+| blue | `#004188` | 9.45:1 |
+| magenta | `#611A6C` | 10.65:1 |
+| cyan | `#003A44` | 11.81:1 |
+
+- **Lowest contrast of any colour in the palette: 7.06:1.** The WCAG AAA
+  threshold for body text is 7:1. Nothing here is below it, including comment
+  text and the bright ANSI colours.
+- Selected text on the selection band: 7.16:1
+- Active window border against the desktop: 9.45:1 (WCAG 1.4.11 asks 3:1)
+- Inactive window border against the desktop: 3.50:1
+
+Reproduce all of it with `tools/verify.py` in the family repo.
+
+## Colour vision simulation
+
+Perceptual separation between the six chromatic slots, under the Machado,
+Oliveira and Fernandes (2009) matrices at full severity. The number is the
+Oklab distance of the closest pair, so higher is better and the pair named is
+the palette's weakest link under that vision type.
+
+| Vision | Closest pair | Distance |
+|---|---|---|
+| normal | blue / cyan | 0.118 |
+| protan **(tuned for this)** | blue / magenta | 0.073 |
+| deutan **(tuned for this)** | blue / magenta | 0.055 |
+| tritan | green / blue | 0.052 |
+
+`cvd-proof.png` in this repo shows the palette rendered four times: normal
+vision plus all three simulations. Compare it against the default Beacon Light proof sheet: under deuteranopia the default collapses red and green into the same olive, and this one does not.
+
+## What is different about this variant
+
+Red is a vermilion (hue 38 rather than 25) and green is a bluish-green (hue 172
+rather than 150). Those two survive the protan and deutan confusion axes where
+crimson and grass green do not.
+
+More importantly, red and green are placed at opposite ends of the contrast
+ladder. Lightness is the only channel a dichromat keeps, so a large lightness
+gap is what actually makes a `git diff` readable, not the hue substitution on
+its own.
+
+The palette is tuned for the **protan** worst case specifically. Protanopia
+comes with reduced luminance sensitivity to red, so reds appear darker than
+they do to a deuteranope and can approach black. Anything that works for protan
+works for deutan; the reverse is not reliably true.
+
+## What ships here
+
+| File | Purpose |
+|---|---|
+| `colors.toml` | The palette. Omarchy generates every app config from this. |
+| `shell.controls.toml` | Focus rings at 3px, all border alphas pinned to 1.0. |
+| `shell.notifications.toml` | 6px left edge as a non-colour urgency cue. |
+| `shell.menu.toml` | Selected rows marked by an edge, not only a fill. |
+| `shell.lock.toml` | Lock screen text and placeholder contrast. |
+| `light.mode` | Pairs the theme with light mode across GTK apps. |
+| `preview.png` | Theme-switcher preview, 1200x675. |
+| `cvd-proof.png` | Simulation proof sheet. |
+| `backgrounds/` | Wallpapers with a clear centre, plus a prompt for adding more. |
+
+The `shell.*.toml` files are **section overrides**, not a replacement
+`shell.toml`. Omarchy generates the full file from its own template and each of
+these replaces one section. Shipping a whole hand-written `shell.toml` would
+silently miss any key a future Omarchy release adds.
+
+Border alphas are pinned to `1.0`. Translucency quietly eats the 3:1 that WCAG
+1.4.11 requires of a control boundary, and a focus ring at 60% alpha is not a
+focus ring that meets 2.4.13.
+
+## Two things this theme cannot set for you
+
+A theme installed from a git URL has its `hyprland.lua` stripped before staging,
+so these have to live in `~/.config/hypr/hyprland.conf`:
+
+```
+general    { border_size = 3 }     # focus visibility, WCAG 2.4.13
+animations { enabled = false }     # reduced motion, WCAG 2.3.3
+```
+
+## Scope
+
+This theme improves things for people with low vision and colour vision
+deficiency. It does **not** make Omarchy usable with a screen reader. That is a
+compositor and toolkit problem, not a palette problem. See the family README.
+
+## Licence
+
+MIT, to match Omarchy.

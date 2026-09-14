@@ -1,0 +1,62 @@
+# omarchy-beacon-dark-theme
+#
+# Neutral high-contrast dark. The full hue range, tuned for normal colour vision. If red and green are hard to tell apart, use the protan-deutan variant instead; this one does not solve that.
+#
+# Every value here is machine-verified before release: WCAG 2.2
+# relative-luminance contrast, APCA Lc (which WCAG 2.x gets wrong on dark
+# backgrounds), and Machado et al. (2009) simulation of protanopia,
+# deuteranopia and tritanopia. Run tools/verify.py to reproduce the numbers.
+
+mode = "dark"
+
+accent    = "#99C6FF"
+selection = "#475971"
+muted     = "#95A2A9"
+
+background         = "#10141A"
+dark_background    = "#0A0E13"
+darker_background  = "#05070B"
+lighter_background = "#1B2029"
+
+foreground        = "#D8DFE8"
+dark_foreground   = "#A3AEBD"
+light_foreground  = "#EDF1F6"
+bright_foreground = "#FFFFFF"
+
+red     = "#FA7C75"
+green   = "#59C977"
+yellow  = "#FFDA70"
+blue    = "#99C6FF"
+magenta = "#FFBDE8"
+cyan    = "#A8F6FF"
+
+bright_red     = "#FF9A92"
+bright_green   = "#59DD7F"
+bright_yellow  = "#FFE9AD"
+bright_blue    = "#B4D5FF"
+bright_magenta = "#FFD2EE"
+bright_cyan    = "#C7F9FF"
+
+# ANSI 16. color8 is `muted`, per Omarchy convention.
+color0  = "#1B2029"
+color1  = "#FA7C75"
+color2  = "#59C977"
+color3  = "#FFDA70"
+color4  = "#99C6FF"
+color5  = "#FFBDE8"
+color6  = "#A8F6FF"
+color7  = "#D8DFE8"
+color8  = "#95A2A9"
+color9  = "#FF9A92"
+color10 = "#59DD7F"
+color11 = "#FFE9AD"
+color12 = "#B4D5FF"
+color13 = "#FFD2EE"
+color14 = "#C7F9FF"
+color15 = "#FFFFFF"
+
+# Window borders. The active border is a flat accent rather than a gradient so
+# every pixel of it clears 3:1 against the desktop (WCAG 1.4.11, and 2.4.13
+# Focus Appearance). A gradient dips below threshold at one end.
+hyprland_active_border   = "#99C6FF"
+hyprland_inactive_border = "#636D77"

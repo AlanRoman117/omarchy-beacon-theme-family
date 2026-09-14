@@ -1,0 +1,17 @@
+# Section override for the Omarchy shell. The filename selects the
+# section, so no [header] is needed. Only this section is replaced;
+# the rest of shell.toml is still generated from the default template.
+
+normal-color        = "#D8DFE8"
+normal-border       = "#95A2A9"
+normal-border-width = 1
+normal-border-alpha = 1.0
+
+hover-cursor-color        = "#FFFFFF"
+hover-cursor-border       = "#9BC6FF"
+hover-cursor-border-width = 2
+hover-cursor-border-alpha = 1.0
+
+focus-border       = "#9BC6FF"
+focus-border-width = 3
+focus-border-alpha = 1.0
