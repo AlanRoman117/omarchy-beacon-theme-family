@@ -6,13 +6,13 @@ putting files in `~/.config/omarchy/backgrounds/omarchy-beacon-light-theme/`.
 
 ## Shipped wallpapers
 
-- `beacon-light-01.jpg`
-- `beacon-light-02.jpg`
-- `beacon-light-03.jpg`
-- `beacon-light-04.jpg`
+- `beacon-light-01-misty-dunes.jpg` — Misty dunes
+- `beacon-light-02-birch-grove-snow.jpg` — Birch grove snow
+- `beacon-light-03-shoreline-stones.jpg` — Shoreline stones
+- `beacon-light-04-distant-range.jpg` — Distant range
 
-All are flat geometric compositions with the central third of the frame left
-empty, checked against the rules below before shipping.
+All are flat papercut nature scenes with the central third of the frame left
+as open sky, checked against the rules below before shipping.
 
 ## What makes a wallpaper accessible
 
@@ -20,19 +20,22 @@ A wallpaper is not decoration here, it is the substrate the lock screen, the bar
 and any desktop text sit on. Three rules:
 
 1. **Keep the centre clear.** The lock screen draws in the middle of the frame.
-   This is a light theme, so the central third must stay empty and light, with nothing below 50% luminance. Shapes
-   belong at the edges and corners.
+   This is a light theme, so the central third must stay empty and light, with nothing below 50% luminance.
+   Landforms belong low in the frame or in the corners, moons and suns in a
+   corner.
 2. **No high-frequency detail.** Fine stripes, dot grids, halftones and dense
    noise cause visual stress and can trigger symptoms in photosensitive users.
-   They also shimmer through the bar's translucency. Flat colour, hard edges.
+   They also shimmer through the bar's translucency. That rules out realistic
+   grass, leaves, star fields and water, which is why these are papercut.
 3. **Match the palette's hue policy.** Any hue is fine, but keep saturation low so it does not compete with the palette's accent colours.
 
 ## Adding another
 
-Generation prompt matched to this variant:
+Generation prompt matched to this variant. Swap the scene for any other in
+this family's setting, but keep the sky wording and the style sentences:
 
 ```
-Minimal abstract desktop wallpaper. Solid warm off-white base (#FAF9F6). A small group of simple geometric shapes (circles, half-circles, rectangles, triangles) clustered in one corner or along one edge, in charcoal, mid-grey, dusty blue and soft amber. Low saturation. Keep the central third of the frame, horizontally and vertically, completely empty background: nothing there below 50% luminance, and no shape crossing into it, even a pale one. Flat matte colour, hard crisp edges, no gradients, no vignette, no glow, no drop shadows, no film or paper grain, no text or lettering, no logos, no dot grids, halftones or fine repeating patterns. 16:9, as large as the generator allows.
+Morning landscape. Solid warm off-white sky (#FAF9F6). Layered sand-beige and pale warm-grey dune shapes confined to the bottom fifth of the frame. A small soft charcoal sun disc in the top-right corner. Low saturation throughout. Flat papercut illustration style: large simple shapes, solid matte colour, hard crisp edges, no gradients, no glow, no halo, no drop shadows, no texture or grain. No fine detail: no individual grass blades, no leaf veins, no water ripples, no foliage texture. No text, no people. Keep the central third of the frame, horizontally and vertically, completely empty flat pale sky: nothing there below 50% luminance and no shape crossing into it, not even a pale one. 16:9, as large as the generator allows.
 ```
 
 Then audit it:
@@ -46,7 +49,7 @@ overlaid text" percentage. The worst-block contrast line scans the whole frame,
 not just the centre, so it fails images whose shapes sit harmlessly in a corner.
 Check the central third by eye.
 
-Name new files `beacon-light-NN.jpg`, continuing the sequence.
+Name new files `beacon-light-NN-scene-name.jpg`, continuing the sequence.
 
 ## Export
 

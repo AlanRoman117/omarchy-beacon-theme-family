@@ -230,7 +230,7 @@ Per-variant hue policy, which is not optional:
 A red-green gradient is invisible to exactly the people the red-green variant
 serves. Same logic inverted for blue-yellow.
 
-Universal constraints: flat matte, hard edges, no gradients, no glow, no drop
+Universal constraints: flat papercut style, hard edges, no gradients, no glow or halo, no drop
 shadows, no text or lettering, no dot grids or halftones or fine repeating
 patterns (visual stress risk, and they shimmer through bar translucency).
 
@@ -243,19 +243,61 @@ That reserved centre is where lock screen UI lands.
 
 ### Current set
 
-Four per theme, `beacon-<variant>-01..04.jpg`, one composition each: corner
-weight, rising diagonal, single form, and an edge frame or scattered
-constellation. All four pass the centre rule and hue policy.
+Four flat papercut nature scenes per theme, named
+`beacon-<variant>-NN-scene-name.jpg`. Each family has its own setting: Dark is
+night, Light is morning, Red-Green is ocean and desert, and Blue-Yellow is
+forest, flowers and volcano, with no blue sky. All 24 pass the centre rule
+(0.00% in the central third), the hue policy, and CVD model divergence (at most
+2.44), before and after upscaling.
 
-What made the difference, from the first attempt at this batch: rising
-diagonals and horizon bands drift through the centre unless the prompt pins
-them to one corner quadrant or the top fifth. Also check shapes in dark
-colours (deep green, magenta) by eye. They sit under the 20% luminance cutoff,
-so the numbers pass them even when they are placed right where the lock screen
-draws.
+**Upscaling.** The generator caps at 1792x1008, so every image is upscaled with
+Upscayl's command-line engine (`upscayl-bin`, model `digital-art-4x`, scale 4),
+then resized with Lanczos to 2560x1440 and saved as JPEG quality 90. That comes
+to 36–284 KB per image, 2.2 MB for all 24. Compared on the same image:
+
+- Gemini's upscaler added grain to the flat sky (noise 0.19 to 1.35), lightened
+  the darks by 4–6%, and produced 1.7 MB files at an odd 2730x1536.
+- Upscayl Digital Art kept skies flat, drifted colour by at most 1.040:1 in any
+  region across all 24, and left CVD divergence essentially unchanged. It has
+  crisper edges than Upscayl Standard.
+- Avoid Remacri, Ultramix and Ultrasharp: they are non-commercial models.
+- The upscale nudged the darkest greens in Blue-Yellow Dark 01 and 04 from
+  about hue 150 to 155–160, into the edge of the audit's rough teal band
+  (1.2–1.5% of pixels). They still read as green, and tritan divergence did
+  not move. Not a policy breach, but check it if those images are redone.
+- A few faint smudge-like artefacts are visible only when zoomed in a long way.
+  The user plans to touch these up by hand. Re-audit after any edit.
+
+**Papercut, not photographs.** Nature was the user's direction. Realistic
+grass, leaves, star fields and water are the fine repeating detail the visual
+stress rule forbids, so the style keeps nature to large flat shapes. Allowing
+photos means revisiting that rule first, not just the prompts.
+
+The Bauhaus geometric set it replaced is in git history (commit `ed0c0fd` and
+earlier). The user did not like it.
+
+Lessons from generating these:
+
+- **Name the sky by what it is not.** "Deep navy sky (#10141A)" produced
+  saturated navy, and the generator ignored the hex. That navy alone scored up
+  to 7.17 model divergence and failed all four Red-Green Dark images. "Very dark
+  desaturated blue-black, almost black; not navy, not royal blue" fixed it
+  (0.70–2.44).
+- **Forbid a halo explicitly** on suns and moons. "No glow" alone still gave a
+  soft light along the horizon.
+- **Pin landforms to the bottom fifth or a corner.** Horizons, rising
+  diagonals and bands drift through the centre otherwise. The Bauhaus batch
+  taught this.
+- **Check dark shapes by eye.** Deep green and magenta sit under the 20%
+  luminance cutoff, so the numbers pass them even right where the lock screen
+  draws.
+- **Advisory fine detail at the edges was accepted:** 04 grass blades, 06 bark
+  dashes, 21 dense flowers, and 24 thin zigzag terraces. 24 is the closest to a
+  repeating-stripe pattern.
 
 Adding a wallpaper means dropping it into `backgrounds/` and re-running
-`tools/assets.py`, which lists the directory contents in `backgrounds/README.md`.
+`tools/assets.py`, which lists the directory contents, with scene names taken
+from the filenames, in `backgrounds/README.md`.
 `cvd-sim/` holds the rendered simulations from `check-wallpaper.py`. It is a
 local review aid and is not published.
 
@@ -312,8 +354,8 @@ Recorded so they are not relitigated.
 4. Before going public: one `omarchy theme install` per theme from GitHub.
    All six already install cleanly from local `file://` subtree splits with no
    dropped files, so this only confirms the published repos.
-5. Wallpapers are 1792x1008, below 1080p, so every common panel upscales them
-   and softens the hard edges. Regenerate larger if a generator allows it.
+5. Hand touch-up of the faint upscaling smudges in the wallpapers (user). Re-run
+   the centre, hue and divergence audit on every edited file.
 
 ## Testing findings worth keeping
 

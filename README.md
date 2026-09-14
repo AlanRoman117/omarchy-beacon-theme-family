@@ -193,10 +193,22 @@ immediately visible.
 
 ## Wallpapers
 
-Each theme ships four wallpapers in `backgrounds/`: flat geometric shapes kept
-to the edges and corners, with the central third of the frame left empty. A
-wallpaper is not decoration here: the lock screen and bar draw directly onto it.
-Each `backgrounds/README.md` also carries a generation prompt for adding more.
+Each theme ships four flat papercut nature scenes in `backgrounds/`, with each
+family set somewhere its colours already belong:
+
+| Family | Setting |
+|---|---|
+| Beacon Dark | Night: alpine lake, pine ridge, a lighthouse headland, a meadow |
+| Beacon Light | Morning: dunes, a birch grove in snow, shoreline stones, a distant range |
+| Red-Green | Ocean and desert, in blue and orange, the colours that stay vivid for red-green colour vision deficiency |
+| Blue-Yellow | Forest, flowers and a volcano, in greens and warm reds, with no blue sky |
+
+A wallpaper is not decoration here: the lock screen and bar draw directly onto
+it. Landforms sit low in the frame or in the corners, leaving open sky across
+the centre. The scenes are papercut rather than photographs because realistic
+grass, leaves, stars and water are exactly the fine repeating detail rule 2
+below forbids. Each `backgrounds/README.md` carries a generation prompt for
+adding more.
 
 Three rules every wallpaper is checked against:
 
