@@ -149,7 +149,7 @@ alongside the ratios.
 
 ## What is deliberately not AAA
 
-Two places, documented rather than fudged.
+Three places, documented rather than fudged.
 
 **The selection band.** Selected text holds AAA against the selection
 background. The band's own edge contrast against the desktop lands around
@@ -162,7 +162,15 @@ selected text won.
 near-white background, a colour has to sit below about 9% relative luminance.
 There is no bright, cheerful, AAA-compliant orange on white. The light variants
 look like ink on paper because that is what the arithmetic permits. If you want
-brighter light-mode colours, the honest move is to target AA and say so.
+brighter light-mode colours, the honest move is to target AA and say so. The
+light variants' `orange` shows this most: it lands as a dark brown.
+
+**Highlighted text in VS Code is AA, not AAA.** Selection, find matches and
+diff highlights have to move toward the text colour to be visible. Each one is
+solved so every syntax colour still reads at 4.5:1 or better on top of it,
+which leaves the highlight at about 1.5:1 against the editor. Holding 7:1
+would make the highlights invisible. Resting text everywhere in VS Code stays
+at 7:1.
 
 ## Why protanopia and deuteranopia share a variant, and tritanopia does not
 
@@ -234,7 +242,46 @@ which affect far more people than tritanopia does. Check against it.
 | `light.mode` | Light variants only. |
 | `preview.png` | Theme-switcher preview, 1200x675. |
 | `cvd-proof.png` | Simulation proof sheet. |
+| `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |
 | `backgrounds/` | Four wallpapers with a clear centre, plus a generation prompt. |
+
+### VS Code
+
+Omarchy themes VS Code in one of two ways. A stock theme names a marketplace
+theme, and Omarchy installs it. A theme installed from git is not allowed to
+name one, because installing an extension runs code, so Omarchy falls back to a
+generic template filled from `colors.toml`. That template assumes a palette
+shaped like the stock themes. With Beacon's AAA-level `muted` it paints bright
+grey panels and leaves secondary buttons at under 2:1.
+
+So each theme ships its own `vscode-theme.json`. It is colour-only JSON, it
+survives the install filter, and Omarchy never overwrites a file the theme
+already provides. Omarchy applies it as the theme called "Omarchy".
+
+**Reload VS Code after switching to a Beacon theme:** run
+**Developer: Reload Window** from the command palette, or restart VS Code. Omarchy registers every
+theme that has no marketplace theme under the same VS Code name, "Omarchy",
+and only swaps the colour file behind it (`omarchy-theme-set-vscode`). The
+`workbench.colorTheme` setting therefore does not change, so VS Code keeps the
+colours it already loaded. Stock themes such as Osaka Jade switch live because
+their VS Code theme names differ. This affects every Omarchy theme installed
+from git, not only Beacon, and a theme cannot fix it from its own files.
+
+It is generated from the same palette objects as `colors.toml`, and
+`tools/verify.py` checks around 70 text and indicator pairs per variant. It
+refuses to write any theme where one fails. Resting surfaces step away from the
+text (darker on dark themes, lighter on light ones), so nothing verified
+against the editor loses contrast in the side bar or a hover widget.
+
+Each palette also carries an `orange`. Omarchy's app templates expect one and
+substitute yellow when it is missing, which merged numbers with types in VS
+Code. It is solved after the six-slot optimisation, so the six verified colours
+do not move.
+
+On the Red-Green variants, diff highlights for inserted and removed lines are
+equally light and differ by hue alone. Read VS Code's `+`/`-` gutter markers
+and the solid gutter bars there. The bars use the palette's red and green, which
+are separated in lightness.
 
 The `shell.*.toml` files are **section overrides**, not a replacement
 `shell.toml`. Omarchy generates the full file from its own template and each of
@@ -274,7 +321,8 @@ omarchy-beacon-theme-family/
 │   └── omarchy-beacon-blueyellow-light-theme/
 ├── tools/
 │   ├── colorlib.py          # Oklch, WCAG, APCA, CVD simulation
-│   ├── verify.py            # generates palettes + CONTRAST-REPORT.md
+│   ├── verify.py            # generates palettes, VS Code themes + CONTRAST-REPORT.md
+│   ├── vscode.py            # builds and checks each vscode-theme.json
 │   ├── assets.py            # generates shell overrides + background prompts
 │   ├── theme_readmes.py     # generates each theme's README from its palette
 │   ├── preview.py           # generates preview.png + cvd-proof.png
@@ -291,7 +339,7 @@ cannot drift from the colours.
 ## Verifying
 
 ```bash
-python3 tools/verify.py         # palettes + CONTRAST-REPORT.md
+python3 tools/verify.py         # palettes + VS Code themes + CONTRAST-REPORT.md
 python3 tools/assets.py         # shell overrides + background prompts
 python3 tools/theme_readmes.py  # per-theme READMEs
 python3 tools/preview.py        # preview.png + cvd-proof.png

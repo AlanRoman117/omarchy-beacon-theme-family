@@ -32,6 +32,7 @@ Background `#10141A`, mode `dark`.
 | dark_foreground | `#A3AEBD` | 8.22:1 | -57 |
 | muted / comments / color8 | `#95A2A9` | 7.05:1 | -50 |
 | accent | `#FF968F` | 8.80:1 | -61 |
+| orange (not an ANSI slot) | `#FFB37E` | 10.56:1 | -70 |
 
 | ANSI | Hex | Contrast vs background |
 |---|---|---|
@@ -82,6 +83,38 @@ general-purpose colourblind theme.** If you have red-green deficiency, this
 palette will be actively worse for you than the default. Use the red-green
 variant instead.
 
+## VS Code
+
+Omarchy normally themes VS Code from a generic template, which assumes a palette
+shaped like the stock themes and leaves parts of the interface unreadable with
+this one. This theme ships its own `vscode-theme.json` instead. Omarchy applies
+it automatically as the theme called "Omarchy" whenever this theme is active.
+
+**After switching to this theme, reload VS Code once:** open the command
+palette and run **Developer: Reload Window**, or restart VS Code. Omarchy gives
+every theme without a marketplace theme the same VS Code name, "Omarchy", and
+only swaps the colour file behind it. VS Code's theme setting therefore does
+not change, so VS Code keeps the colours it already loaded until the window
+reloads. The same happens with any Omarchy theme installed from git. Switching
+to a stock theme such as Osaka Jade updates live, because its VS Code theme
+has a different name.
+
+- 71 text and indicator pairs checked. Every piece of resting text,
+  including syntax colours, comments, line numbers and side bar labels, is at
+  least **7.05:1**.
+- Borders, focus rings, the cursor and gutter markers are at least
+  **3.30:1** (WCAG 1.4.11 asks 3:1).
+- **Highlighted text drops to AA.** Selection, find matches and diff
+  highlights have to move toward the text colour to be visible at all. Each is
+  solved so every syntax colour still reads at **4.65:1** or better on top
+  of it, which leaves the highlight itself at about 1.5:1 against the
+  editor. This is the same trade-off as the selection band, applied to more
+  kinds of highlight.
+- Faded "unused" code keeps full opacity and gets a dotted underline instead,
+  because fading drops it below AAA.
+
+The full table is in `CONTRAST-REPORT.md` in the family repo.
+
 ## What ships here
 
 | File | Purpose |
@@ -93,6 +126,7 @@ variant instead.
 | `shell.lock.toml` | Lock screen text and placeholder contrast. |
 | `preview.png` | Theme-switcher preview, 1200x675. |
 | `cvd-proof.png` | Simulation proof sheet. |
+| `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |
 | `backgrounds/` | Wallpapers with a clear centre, plus a prompt for adding more. |
 
 The `shell.*.toml` files are **section overrides**, not a replacement

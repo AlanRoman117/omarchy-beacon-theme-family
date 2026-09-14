@@ -32,6 +32,7 @@ Background `#FAF9F6`, mode `light`.
 | dark_foreground | `#4E4E49` | 7.95:1 | +85 |
 | muted / comments / color8 | `#4B575E` | 7.06:1 | +82 |
 | accent | `#004188` | 9.45:1 | +89 |
+| orange (not an ANSI slot) | `#603000` | 10.39:1 | +91 |
 
 | ANSI | Hex | Contrast vs background |
 |---|---|---|
@@ -84,6 +85,42 @@ comes with reduced luminance sensitivity to red, so reds appear darker than
 they do to a deuteranope and can approach black. Anything that works for protan
 works for deutan; the reverse is not reliably true.
 
+## VS Code
+
+Omarchy normally themes VS Code from a generic template, which assumes a palette
+shaped like the stock themes and leaves parts of the interface unreadable with
+this one. This theme ships its own `vscode-theme.json` instead. Omarchy applies
+it automatically as the theme called "Omarchy" whenever this theme is active.
+
+**After switching to this theme, reload VS Code once:** open the command
+palette and run **Developer: Reload Window**, or restart VS Code. Omarchy gives
+every theme without a marketplace theme the same VS Code name, "Omarchy", and
+only swaps the colour file behind it. VS Code's theme setting therefore does
+not change, so VS Code keeps the colours it already loaded until the window
+reloads. The same happens with any Omarchy theme installed from git. Switching
+to a stock theme such as Osaka Jade updates live, because its VS Code theme
+has a different name.
+
+- 71 text and indicator pairs checked. Every piece of resting text,
+  including syntax colours, comments, line numbers and side bar labels, is at
+  least **7.06:1**.
+- Borders, focus rings, the cursor and gutter markers are at least
+  **3.33:1** (WCAG 1.4.11 asks 3:1).
+- **Highlighted text drops to AA.** Selection, find matches and diff
+  highlights have to move toward the text colour to be visible at all. Each is
+  solved so every syntax colour still reads at **4.65:1** or better on top
+  of it, which leaves the highlight itself at about 1.5:1 against the
+  editor. This is the same trade-off as the selection band, applied to more
+  kinds of highlight.
+- Faded "unused" code keeps full opacity and gets a dotted underline instead,
+  because fading drops it below AAA.
+- **Diffs: read the gutter, not the tint.** Inserted and removed highlights
+  are equally light, so they differ by hue alone. VS Code's `+` and `-`
+  markers and the solid gutter bars carry the difference instead: the bars use
+  this palette's red and green, which are pulled apart in lightness.
+
+The full table is in `CONTRAST-REPORT.md` in the family repo.
+
 ## What ships here
 
 | File | Purpose |
@@ -96,6 +133,7 @@ works for deutan; the reverse is not reliably true.
 | `light.mode` | Pairs the theme with light mode across GTK apps. |
 | `preview.png` | Theme-switcher preview, 1200x675. |
 | `cvd-proof.png` | Simulation proof sheet. |
+| `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |
 | `backgrounds/` | Wallpapers with a clear centre, plus a prompt for adding more. |
 
 The `shell.*.toml` files are **section overrides**, not a replacement

@@ -14,8 +14,9 @@ Design method
    its contrast target exactly. Compliance is true by construction, not by
    inspection.
 """
-import os, itertools
+import os, itertools, json
 from colorlib import *
+import vscode
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 OUT = os.path.join(ROOT, "themes")
@@ -72,7 +73,8 @@ VARIANTS = {
     "omarchy-beacon-dark-theme": dict(
         mode="dark", accent_slot="blue", optimise=("normal",),
         hues={"red": (25, 0.155), "green": (150, 0.155), "yellow": (90, 0.160),
-              "blue": (255, 0.150), "magenta": (340, 0.150), "cyan": (205, 0.125)},
+              "blue": (255, 0.150), "magenta": (340, 0.150), "cyan": (205, 0.125),
+              "orange": (55, 0.150)},
         blurb="Neutral high-contrast dark. The full hue range, tuned for normal "
               "colour vision. If red and green are hard to tell apart, use the "
               "protan-deutan variant instead; this one does not solve that.",
@@ -80,7 +82,8 @@ VARIANTS = {
     "omarchy-beacon-redgreen-dark-theme": dict(
         mode="dark", accent_slot="blue", optimise=("protan", "deutan"),
         hues={"red": (38, 0.150), "green": (172, 0.115), "yellow": (88, 0.160),
-              "blue": (256, 0.150), "magenta": (322, 0.140), "cyan": (215, 0.105)},
+              "blue": (256, 0.150), "magenta": (322, 0.140), "cyan": (215, 0.105),
+              "orange": (62, 0.150)},
         blurb="Red-green safe dark. Red shifts to vermilion and green to "
               "bluish-green, then the two are pulled apart by lightness for the "
               "protan worst case.",
@@ -88,14 +91,16 @@ VARIANTS = {
     "omarchy-beacon-blueyellow-dark-theme": dict(
         mode="dark", accent_slot="red", optimise=("tritan",),
         hues={"red": (25, 0.160), "green": (145, 0.150), "yellow": (85, 0.160),
-              "blue": (258, 0.145), "magenta": (348, 0.140), "cyan": (196, 0.110)},
+              "blue": (258, 0.145), "magenta": (348, 0.140), "cyan": (196, 0.110),
+              "orange": (55, 0.155)},
         blurb="Blue-yellow safe dark. Red and green stay trustworthy here, so the "
               "work goes into separating blue from green and yellow from magenta.",
     ),
     "omarchy-beacon-light-theme": dict(
         mode="light", accent_slot="blue", optimise=("normal",),
         hues={"red": (25, 0.160), "green": (150, 0.130), "yellow": (78, 0.130),
-              "blue": (255, 0.150), "magenta": (340, 0.150), "cyan": (210, 0.120)},
+              "blue": (255, 0.150), "magenta": (340, 0.150), "cyan": (210, 0.120),
+              "orange": (50, 0.145)},
         blurb="Neutral high-contrast light. The full hue range, tuned for normal "
               "colour vision. If red and green are hard to tell apart, use the "
               "protan-deutan variant instead; this one does not solve that.",
@@ -103,7 +108,8 @@ VARIANTS = {
     "omarchy-beacon-redgreen-light-theme": dict(
         mode="light", accent_slot="blue", optimise=("protan", "deutan"),
         hues={"red": (38, 0.155), "green": (172, 0.110), "yellow": (78, 0.130),
-              "blue": (256, 0.150), "magenta": (322, 0.145), "cyan": (215, 0.110)},
+              "blue": (256, 0.150), "magenta": (322, 0.145), "cyan": (215, 0.110),
+              "orange": (58, 0.145)},
         blurb="Red-green safe light. Red shifts to vermilion and green to "
               "bluish-green, then the two are pulled apart by lightness for the "
               "protan worst case.",
@@ -111,7 +117,8 @@ VARIANTS = {
     "omarchy-beacon-blueyellow-light-theme": dict(
         mode="light", accent_slot="red", optimise=("tritan",),
         hues={"red": (25, 0.160), "green": (145, 0.140), "yellow": (80, 0.130),
-              "blue": (258, 0.150), "magenta": (348, 0.145), "cyan": (196, 0.115)},
+              "blue": (258, 0.150), "magenta": (348, 0.145), "cyan": (196, 0.115),
+              "orange": (52, 0.145)},
         blurb="Blue-yellow safe light. Red and green stay trustworthy here, so the "
               "work goes into separating blue from green and yellow from magenta.",
     ),
@@ -173,6 +180,42 @@ def optimise(spec):
     return best
 
 
+def solve_orange(spec, bg, darker, normals, ladder):
+    """Place orange without disturbing the six optimised slots.
+
+    Omarchy's app templates expect an `orange` and substitute yellow when a
+    theme has none, which silently merges numbers with types in VS Code and
+    elsewhere. Orange is solved afterwards, on its own: every contrast target
+    across the ladder's range is tried, and the one that keeps orange furthest
+    from its nearest neighbour under the variant's vision types wins. The six
+    slots, and every number already verified for them, stay exactly as they were.
+    """
+    h, c = spec["hues"]["orange"]
+    floor = CHROMA_FLOOR[spec["mode"]]
+    best, t = None, ladder[0]
+    while t <= ladder[-1] + 1e-9:
+        cand = solve_for_contrast(h, c, bg, t, darker)
+        if hex_to_oklch(cand)[1] >= floor:
+            near = nearest(cand, normals, spec["optimise"])
+            if best is None or near[0] > best[0][0]:
+                best = (near, cand)
+        t = round(t + 0.1, 2)
+    return best[1], best[0]
+
+
+def nearest(hexv, normals, kinds):
+    """(distance, slot, vision) of the slot closest to hexv under any of kinds."""
+    out = None
+    for kind in kinds:
+        a = hexv if kind == "normal" else simulate(hexv, kind)
+        for s in SLOTS:
+            b = normals[s] if kind == "normal" else simulate(normals[s], kind)
+            d = oklab_distance(a, b)
+            if out is None or d < out[0]:
+                out = (d, s, kind)
+    return out
+
+
 def build(spec):
     n = dict(DARK_NEUTRALS if spec["mode"] == "dark" else LIGHT_NEUTRALS)
     bg = n["background"]
@@ -211,6 +254,8 @@ def build(spec):
     out["color8"] = n["muted"]
     out["accent"] = normals[spec["accent_slot"]]
     out["inactive_border"] = solve_for_contrast(250, 0.02, bg, 3.5, darker)
+    out["orange"], out["_orange_nearest"] = solve_orange(spec, bg, darker,
+                                                         normals, ladder)
     out["_normals"], out["_brights"], out["_scores"] = normals, brights, (pri, allp)
     return out
 
@@ -246,6 +291,7 @@ yellow  = "{yellow}"
 blue    = "{blue}"
 magenta = "{magenta}"
 cyan    = "{cyan}"
+orange  = "{orange}"
 
 bright_red     = "{bright_red}"
 bright_green   = "{bright_green}"
@@ -293,6 +339,7 @@ def report(name, spec, p):
             ("accent", p["accent"])]
     rows += [(s, p["_normals"][s]) for s in SLOTS]
     rows += [("bright_" + s, p["_brights"][s]) for s in SLOTS]
+    rows += [("orange", p["orange"])]
     worst = 99.0
     for role, hexv in rows:
         cr = contrast(hexv, bg)
@@ -309,6 +356,10 @@ def report(name, spec, p):
           f"{contrast(p['accent'], bg):.2f}:1 (1.4.11 needs 3:1)",
           f"- Inactive window border against background: "
           f"{contrast(p['inactive_border'], bg):.2f}:1",
+          f"- `orange` sits outside the six-slot optimisation and does not move "
+          f"them. Its nearest slot is {p['_orange_nearest'][1]} under "
+          f"{p['_orange_nearest'][2]} vision, Oklab distance "
+          f"{p['_orange_nearest'][0]:.3f}",
           ""]
     L += ["Perceptual separation between the six chromatic slots under simulated "
           "colour vision deficiency (Machado 2009 at full severity, Oklab "
@@ -334,6 +385,18 @@ def report(name, spec, p):
     return "\n".join(L), worst
 
 
+def vscode_report(checks):
+    L = ["### VS Code (`vscode-theme.json`)", "",
+         "Every text and indicator pair the generated VS Code theme creates. "
+         "Translucent highlights are measured as composited over the editor "
+         "background. Rows marked advisory carry no requirement.", "",
+         "| Area | Foreground | On | Contrast | Needs |", "|---|---|---|---|---|"]
+    for area, fl, fv, bl, bv, need, cr in checks:
+        req = "advisory" if need is None else f"{need:g}:1"
+        L.append(f"| {area} | {fl} `{fv}` | {bl} `{bv}` | {cr:.2f}:1 | {req} |")
+    return L
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     reps = []
@@ -341,13 +404,26 @@ def main():
         p = build(spec)
         d = os.path.join(OUT, name)
         os.makedirs(os.path.join(d, "backgrounds"), exist_ok=True)
+
+        theme, checks = vscode.build(p, spec["mode"], name)
+        failed = [c for c in checks if c[5] is not None and c[6] < c[5]]
+        if failed:
+            for area, fl, fv, bl, bv, need, cr in failed:
+                print(f"FAIL {name}: {area}: {fl} {fv} on {bl} {bv} "
+                      f"{cr:.2f}:1 < {need}:1")
+            raise SystemExit("VS Code theme failed verification; nothing written.")
+
         fields = {k: v for k, v in p.items() if not k.startswith("_")}
         fields.update(name=name, blurb=spec["blurb"], mode=spec["mode"])
         with open(os.path.join(d, "colors.toml"), "w") as f:
             f.write(COLORS_TPL.format(**fields))
+        with open(os.path.join(d, "vscode-theme.json"), "w") as f:
+            json.dump(theme, f, indent=4)
+            f.write("\n")
         if spec["mode"] == "light":
             open(os.path.join(d, "light.mode"), "w").close()
         r, worst = report(name, spec, p)
+        r += "\n" + "\n".join(vscode_report(checks)) + "\n"
         reps.append(r)
         print(f"{name:42s} worst {worst:5.2f}:1  pri {p['_scores'][0]:.3f}  "
               f"all {p['_scores'][1]:.3f}")
