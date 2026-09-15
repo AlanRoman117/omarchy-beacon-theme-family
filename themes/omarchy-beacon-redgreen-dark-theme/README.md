@@ -133,6 +133,12 @@ The full table is in `CONTRAST-REPORT.md` in the family repo.
 | `preview.png` | Theme-switcher preview, 1200x675. |
 | `cvd-proof.png` | Simulation proof sheet. |
 | `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |
+| `btop.theme` | btop: Omarchy's generated theme with its failing contrast pairs fixed. |
+| `pi.json` | Pi: Omarchy's generated theme with its failing contrast pairs fixed. |
+| `claude.json` | Claude Code: Omarchy's generated theme with its failing contrast pairs fixed. |
+| `t3code.json` | T3 Code: Omarchy's generated theme with its failing contrast pairs fixed. |
+| `hermes.yaml` | Hermes: Omarchy's generated theme with its failing contrast pairs fixed. |
+| `obsidian.css` | Obsidian: Omarchy's generated theme with its failing contrast pairs fixed. |
 | `backgrounds/` | Wallpapers with a clear centre, plus a prompt for adding more. |
 
 The `shell.*.toml` files are **section overrides**, not a replacement

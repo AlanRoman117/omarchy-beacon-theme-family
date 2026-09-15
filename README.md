@@ -255,7 +255,27 @@ which affect far more people than tritanopia does. Check against it.
 | `preview.png` | Theme-switcher preview, 1200x675. |
 | `cvd-proof.png` | Simulation proof sheet. |
 | `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |
+| `btop.theme`, `pi.json`, `claude.json`, `t3code.json`, `hermes.yaml`, `obsidian.css` | Omarchy's generated app themes, with their failing contrast pairs fixed. |
 | `backgrounds/` | Four wallpapers with a clear centre, plus a generation prompt. |
+
+### Other apps Omarchy themes
+
+Omarchy generates themes for btop, Helix, Obsidian, Pi, Claude Code, T3 Code,
+Hermes and the screen share picker from `colors.toml`. Those templates assume a
+stock palette, and nothing checked them against Beacon's guarantees. On every
+Beacon variant, six of the eight failed at least one pair. btop's selected
+process row, for example, drew the accent on the selection band at 3.41–4.66:1.
+
+`tools/apps.py` renders each template exactly as Omarchy does (a parity check
+byte-compares the result with Omarchy's own output), measures the text,
+selection and border pairs, and ships a patched copy only for apps that fail.
+Patches change one to three values each and reuse colours already verified
+elsewhere: the palette, or the VS Code theme's selection and hover surfaces.
+Helix and the share picker pass as generated, so Beacon ships nothing for them.
+The full before-and-after table is in [`APPS-REPORT.md`](APPS-REPORT.md).
+
+Terminals and Neovim need no patch: they draw the verified ANSI colours, and a
+theme installed from git cannot ship `.lua` or terminal config files anyway.
 
 ### VS Code
 
@@ -335,6 +355,7 @@ omarchy-beacon-theme-family/
 │   ├── colorlib.py          # Oklch, WCAG, APCA, CVD simulation
 │   ├── verify.py            # generates palettes, VS Code themes + CONTRAST-REPORT.md
 │   ├── vscode.py            # builds and checks each vscode-theme.json
+│   ├── apps.py              # verifies and patches Omarchy's generated app themes
 │   ├── assets.py            # generates shell overrides + background prompts
 │   ├── theme_readmes.py     # generates each theme's README from its palette
 │   ├── preview.py           # generates preview.png + cvd-proof.png

@@ -5,6 +5,14 @@ from colorlib import contrast, apca_lc, simulate, oklab_distance
 from verify import VARIANTS, build, OUT, SLOTS
 import vscode
 
+# App themes tools/apps.py may ship when Omarchy's generated file fails.
+APP_LABEL = {
+    "btop.theme": "btop", "helix.toml": "Helix", "pi.json": "Pi",
+    "claude.json": "Claude Code", "t3code.json": "T3 Code", "hermes.yaml": "Hermes",
+    "hyprland-preview-share-picker.css": "Screen share picker",
+    "obsidian.css": "Obsidian",
+}
+
 FAMILY = "https://github.com/YOURNAME/omarchy-beacon-theme-family"
 
 META = {
@@ -202,7 +210,7 @@ The full table is in `CONTRAST-REPORT.md` in the family repo.
 | `shell.lock.toml` | Lock screen text and placeholder contrast. |{light_mode}
 | `preview.png` | Theme-switcher preview, 1200x675. |
 | `cvd-proof.png` | Simulation proof sheet. |
-| `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |
+| `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |{app_rows}
 | `backgrounds/` | Wallpapers with a clear centre, plus a prompt for adding more. |
 
 The `shell.*.toml` files are **section overrides**, not a replacement
@@ -300,6 +308,9 @@ def main():
             vs_vis=f"{min(c[6] for c in vs_checks if c[0] == 'Highlight visibility' and c[3] == 'editor'):.1f}",
             vs_diff_note=DIFF_NOTE.get(m["axis"], ""),
             axis_note=AXIS_NOTE.get(m["axis"], ""),
+            app_rows="".join(
+                f"\n| `{a}` | {APP_LABEL[a]}: Omarchy's generated theme with its failing contrast pairs fixed. |"
+                for a in APP_LABEL if os.path.exists(os.path.join(OUT, name, a))),
             light_mode=("\n| `light.mode` | Pairs the theme with light mode across "
                         "GTK apps. |" if m["mode"] == "light" else ""))
         with open(os.path.join(OUT, name, "README.md"), "w") as f:

@@ -36,6 +36,7 @@ exactly the people who most need accurate information.
 | `themes/*/colors.toml` | `tools/verify.py` |
 | `themes/*/vscode-theme.json` | `tools/verify.py` (built by `tools/vscode.py`) |
 | `vscode-extension/` | `tools/vscode_extension.py` |
+| `themes/*/btop.theme`, `pi.json`, `claude.json`, `t3code.json`, `hermes.yaml`, `obsidian.css`, `APPS-REPORT.md` | `tools/apps.py` (needs Omarchy) |
 | `themes/*/shell.*.toml` | `tools/assets.py` |
 | `themes/*/backgrounds/README.md` | `tools/assets.py` |
 | `themes/*/README.md` | `tools/theme_readmes.py` |
@@ -55,6 +56,7 @@ python3 tools/assets.py         # shell overrides + background prompts
 python3 tools/theme_readmes.py  # per-theme READMEs
 python3 tools/preview.py        # preview.png + cvd-proof.png
 python3 tools/vscode_extension.py  # VS Code extension package
+python3 tools/apps.py           # verify and patch Omarchy's app themes (Omarchy only)
 ```
 
 Hand-maintained: root `README.md`, this file, `publish.sh`, `LICENSE`,
@@ -98,6 +100,18 @@ theme passes AAA perfectly and is useless.
   *after* the 720-permutation search, picking the contrast target that keeps
   it furthest from its nearest slot. Do not add it to `SLOTS`: that changes the
   optimisation and every verified number with it.
+- **Omarchy's generated app themes are verified.** `tools/apps.py` renders
+  every in-scope template (btop, Helix, Obsidian, Pi, Claude, T3 Code, Hermes,
+  share picker) the way Omarchy does, and ships a patched copy only where a
+  pair fails: 7:1 text, 4.5:1 on selection or highlights, 3:1 non-text. Fixes
+  only reuse palette roles or surfaces `vscode.py` already verified. It writes
+  nothing if any app still fails. `--parity` byte-compares the renderer with
+  Omarchy's staged output for the active Beacon theme; run it whenever Omarchy
+  updates.
+- **Re-run `apps.py` after `omarchy update`.** A shipped app file freezes that
+  template as of the last run, so a key a later Omarchy adds is missing until
+  the file is regenerated. This is the same trade-off as section overrides.
+  Apps that pass as generated ship nothing and track Omarchy automatically.
 - **The VS Code theme gates the build.** `vscode.build()` returns every
   text/surface pair it creates, and `verify.py` raises and writes nothing if a
   required one fails: 7:1 resting text, 4.5:1 text on highlights, 3:1

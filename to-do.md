@@ -235,6 +235,26 @@ matching one after Omarchy's own VS Code step.
 - [ ] Bump `VERSION` in `tools/vscode_extension.py` whenever a palette or the VS
       Code mapping changes, and add a publish script next to `publish.sh`.
 
+## Ideas from OldJobobo's Aonagi theme (later, optional)
+
+Done: every app theme Omarchy generates is now verified and patched where it
+failed (`tools/apps.py`, `APPS-REPORT.md`). Still open, in rough order of value:
+
+- [ ] `icons.theme` per variant. All 22 stock themes ship one; Beacon falls back
+      to `Yaru-blue`. Pick a Yaru colour per variant (installed: blue, magenta,
+      olive, prussiangreen, purple, red, sage, wartybrown, yellow).
+- [ ] Complete `shell.*` sections, including `[bar]` and `[hyprland]` borders,
+      which Aonagi styles through `shell.toml`. Overlaps open item 1 in
+      CLAUDE.md.
+- [ ] Showcase assets: a real desktop screenshot for `preview.png` (Neovim,
+      btop, VS Code), a palette sheet, a wallpaper contact sheet in the README,
+      and `.omarchy-theme.yml` gallery metadata.
+- [ ] Extra manually installed app themes (Zed, Zellij, Base24), each with its
+      own contrast checks.
+
+Not possible for git-installed themes: `hyprland.lua` (animations, gaps),
+`neovim.lua`, `gum_env.lua` and terminal configs. Omarchy drops them on install.
+
 ## Other open items
 
 Also tracked in `CLAUDE.md`:
