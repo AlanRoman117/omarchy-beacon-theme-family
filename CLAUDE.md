@@ -429,10 +429,11 @@ Recorded so they are not relitigated.
 
 ## Open items
 
+Published 2026-09-15: the family repo is public, and all six theme repos were
+created by `publish.sh` and install from GitHub with nothing dropped. Re-run
+`publish.sh` from `main` after any change to `themes/`.
+
 1. Region-aware wallpaper audit (see above).
-2. Before going public: one `omarchy theme install` per theme from GitHub.
-   All six already install cleanly from local `file://` subtree splits with no
-   dropped files, so this only confirms the published repos.
 
 ## Testing findings worth keeping
 
