@@ -264,10 +264,14 @@ for; "protanopia" goes in the description where search still catches it. Avoid
 real desktop screenshot at 1800x1012, so Beacon does too; the generated palette
 swatch that used to fill it is now `palette.png`, shown in each README.
 
-Captured 2026-09-14 with `omarchy capture screenshot` at 1920x1080, then resized
-with Lanczos to 1800x1012. All six use the same layout: Neovim top left, btop
-top right, a terminal bottom left, Files bottom right, over that variant's
-wallpaper. To redo one, keep that layout, so the switcher compares like with
+Captured 2026-09-15 with `omarchy capture screenshot` at 1920x1080, then resized
+with Lanczos to 1800x1012. All six use the same layout, with Omarchy's top bar
+visible: Neovim top left, btop top right, a terminal (`ls -F` of home) bottom
+left, Files bottom right, over that variant's wallpaper. Blur regions in
+1920x1080 capture coordinates: LAN address (1036,387)-(1150,413), btop
+Command and User columns (1578,236)-(1764,514), the `ls` User column
+(141,620)-(221,802), and the Files drive label (1004,983)-(1106,1013). They
+only hold for this exact layout, so re-measure after any retake. To redo one, keep that layout, so the switcher compares like with
 like. The username, drive
 label and LAN address are blurred (pixelated, then Gaussian-blurred) in the
 shipped previews; the raw captures in `~/Pictures` are not redacted.
