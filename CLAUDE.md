@@ -408,6 +408,8 @@ Recorded so they are not relitigated.
   creates missing theme repos as public.
 - **VS Code extension publisher is `AlanRoman117`** (decided 2026-09-15), so the
   extension ID is `AlanRoman117.beacon-themes`. It is permanent once published.
+  The Marketplace display name is **Beacon Themes**: display names must be
+  unique (case-insensitive), and "beacon" was already taken.
 - **The hook ships from the family repo, not the themes.** Themes stay
   colour-only; the extension README gives a `curl` plus
   `omarchy hook install theme-set` command pointing at

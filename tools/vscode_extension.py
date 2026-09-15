@@ -29,7 +29,7 @@ TAGLINE = {
     "blueyellow-light": "tritanopia",
 }
 
-README = """# Beacon
+README = """# Beacon Themes
 
 Six high-contrast colour themes for VS Code, VSCodium and Cursor: a dark and a
 light default, plus red-green safe and blue-yellow safe variants of each.
@@ -125,7 +125,7 @@ def main():
 
     package = {
         "name": NAME,
-        "displayName": "Beacon",
+        "displayName": "Beacon Themes",
         "description": "High-contrast themes solved for WCAG AAA, with red-green "
                        "and blue-yellow safe variants for colour vision deficiency.",
         "version": VERSION,
