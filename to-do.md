@@ -227,7 +227,7 @@ matching one after Omarchy's own VS Code step.
 - [ ] Open VSX (VSCodium and Cursor): Eclipse account linked to GitHub, sign
       the publisher agreement, create a namespace, get a token, then
       `npx ovsx publish`.
-- [ ] Make the repo public first. vsce rewrites relative README links and
+- [x] Make the repo public first. vsce rewrites relative README links and
       images to GitHub, and rejects SVG images.
 - [x] Decide where users get the hook: the family repo, with a `curl` plus
       `omarchy hook install` command in the extension README.
@@ -265,4 +265,4 @@ Also tracked in `CLAUDE.md`:
       the rest as advisory.
 - [x] Replace the `YOURNAME` GitHub owner in `README.md`, `publish.sh` and
       `tools/theme_readmes.py`. The git remote points at `AlanRoman117`.
-- [ ] Before going public: one `omarchy theme install` per theme from GitHub.
+- [x] Before going public: one `omarchy theme install` per theme from GitHub. Done 2026-09-15; all six install with nothing dropped.
