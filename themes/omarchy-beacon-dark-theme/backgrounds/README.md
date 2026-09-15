@@ -1,0 +1,58 @@
+# Backgrounds for `omarchy-beacon-dark-theme`
+
+The Omarchy shell renders the background itself in Quattro; cycle images with
+**Super + Ctrl + Space**. Users can add their own without touching this theme by
+putting files in `~/.config/omarchy/backgrounds/omarchy-beacon-dark-theme/`.
+
+## Shipped wallpapers
+
+- `beacon-dark-01-alpine-lake-night.jpg` — Alpine lake night
+- `beacon-dark-02-pine-ridge-night.jpg` — Pine ridge night
+- `beacon-dark-03-headland-lighthouse.jpg` — Headland lighthouse
+- `beacon-dark-04-night-meadow.jpg` — Night meadow
+
+All are flat papercut nature scenes with the central third of the frame left
+as open sky, checked against the rules below before shipping.
+
+## What makes a wallpaper accessible
+
+A wallpaper is not decoration here, it is the substrate the lock screen, the bar
+and any desktop text sit on. Three rules:
+
+1. **Keep the centre clear.** The lock screen draws in the middle of the frame.
+   This is a dark theme, so the central third must stay empty and dark, with nothing above 20% luminance.
+   Landforms belong low in the frame or in the corners, moons and suns in a
+   corner.
+2. **No high-frequency detail.** Fine stripes, dot grids, halftones and dense
+   noise cause visual stress and can trigger symptoms in photosensitive users.
+   They also shimmer through the bar's translucency. That rules out realistic
+   grass, leaves, star fields and water, which is why these are papercut.
+3. **Match the palette's hue policy.** Any hue is fine, but keep saturation low so it does not compete with the palette's accent colours.
+
+## Adding another
+
+Generation prompt matched to this variant. Swap the scene for any other in
+this family's setting, but keep the sky wording and the style sentences:
+
+```
+Night landscape. Solid very dark desaturated blue-charcoal sky, almost black (#10141A). Three layers of muted slate and dusty blue mountain silhouettes confined to the bottom fifth of the frame, with a flat still lake below them. A small pale cream full moon in the top-left corner. Low saturation throughout. Flat papercut illustration style: large simple shapes, solid matte colour, hard crisp edges, no gradients, no glow, no halo, no drop shadows, no texture or grain. No fine detail: no star fields, no individual grass blades, no leaf veins, no water ripples, no foliage texture. No text, no people. Keep the central third of the frame, horizontally and vertically, completely empty flat sky: nothing there above 20% luminance and no shape crossing into it, not even a dark one. 16:9, as large as the generator allows.
+```
+
+Then audit it:
+
+```bash
+python3 tools/check-wallpaper.py --mode dark path/to/image.jpg
+```
+
+Trust the model divergence figure (under 4 is clean) and the "area that fights
+overlaid text" percentage. The worst-block contrast line scans the whole frame,
+not just the centre, so it fails images whose shapes sit harmlessly in a corner.
+Check the central third by eye.
+
+Name new files `beacon-dark-NN-scene-name.jpg`, continuing the sequence.
+
+## Export
+
+- 16:9 at your panel's native resolution.
+- Also export **1200x675 WebP under 100 KB** if you submit this theme to the
+  Omarchy theme gallery, which is the screenshot spec.

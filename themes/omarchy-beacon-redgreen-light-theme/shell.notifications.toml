@@ -1,0 +1,12 @@
+# Section override for the Omarchy shell. The filename selects the
+# section, so no [header] is needed. Only this section is replaced;
+# the rest of shell.toml is still generated from the default template.
+
+background        = "#FAF9F6"
+background-alpha  = 1.0
+text              = "#2B2B28"
+border            = "#004188"
+border-alpha      = 1.0
+border-width      = 2
+border-width-left = 6
+countdown         = "#004188"
