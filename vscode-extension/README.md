@@ -1,4 +1,4 @@
-# Beacon
+# Beacon Themes
 
 Six high-contrast colour themes for VS Code, VSCodium and Cursor: a dark and a
 light default, plus red-green safe and blue-yellow safe variants of each.
