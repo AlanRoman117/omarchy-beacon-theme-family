@@ -292,14 +292,31 @@ So each theme ships its own `vscode-theme.json`. It is colour-only JSON, it
 survives the install filter, and Omarchy never overwrites a file the theme
 already provides. Omarchy applies it as the theme called "Omarchy".
 
-**Reload VS Code after switching to a Beacon theme:** run
-**Developer: Reload Window** from the command palette, or restart VS Code. Omarchy registers every
+**Live switching needs the extension and a hook.** Omarchy registers every
 theme that has no marketplace theme under the same VS Code name, "Omarchy",
 and only swaps the colour file behind it (`omarchy-theme-set-vscode`). The
 `workbench.colorTheme` setting therefore does not change, so VS Code keeps the
-colours it already loaded. Stock themes such as Osaka Jade switch live because
-their VS Code theme names differ. This affects every Omarchy theme installed
-from git, not only Beacon, and a theme cannot fix it from its own files.
+colours it already loaded until **Developer: Reload Window**. Stock themes
+such as Osaka Jade switch live only because they name a Marketplace theme in
+`vscode.json`, which Omarchy strips from themes installed from git.
+
+Beacon closes that gap in two parts:
+
+- **[Beacon Themes](https://marketplace.visualstudio.com/items?itemName=AlanRoman117.beacon-themes)**
+  on the VS Code Marketplace (`code --install-extension AlanRoman117.beacon-themes`)
+  gives all six variants their own names. It is built from the same verified
+  theme objects as `vscode-theme.json`, by `tools/vscode_extension.py`.
+- **`tools/omarchy-hooks/beacon-vscode.sh`**, an optional `theme-set` hook, runs
+  after Omarchy's own VS Code step and switches the setting to the matching
+  Beacon theme, only when the extension is registered:
+
+  ```bash
+  curl -fsSL -o /tmp/beacon-vscode.sh https://raw.githubusercontent.com/AlanRoman117/omarchy-beacon-theme-family/main/tools/omarchy-hooks/beacon-vscode.sh
+  omarchy hook install theme-set /tmp/beacon-vscode.sh
+  ```
+
+Without either, everything still works; VS Code just needs a reload after each
+switch.
 
 It is generated from the same palette objects as `colors.toml`, and
 `tools/verify.py` checks around 70 text and indicator pairs per variant. It
