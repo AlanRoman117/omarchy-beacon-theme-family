@@ -92,14 +92,30 @@ shaped like the stock themes and leaves parts of the interface unreadable with
 this one. This theme ships its own `vscode-theme.json` instead. Omarchy applies
 it automatically as the theme called "Omarchy" whenever this theme is active.
 
-**After switching to this theme, reload VS Code once:** open the command
-palette and run **Developer: Reload Window**, or restart VS Code. Omarchy gives
-every theme without a marketplace theme the same VS Code name, "Omarchy", and
-only swaps the colour file behind it. VS Code's theme setting therefore does
-not change, so VS Code keeps the colours it already loaded until the window
-reloads. The same happens with any Omarchy theme installed from git. Switching
-to a stock theme such as Osaka Jade updates live, because its VS Code theme
-has a different name.
+**Make VS Code switch live, once.** Omarchy gives every theme installed from
+git the same VS Code name, "Omarchy", and only swaps the colour file behind it,
+so on its own VS Code keeps the old colours until you run **Developer: Reload
+Window**. To make Beacon switches apply immediately:
+
+1. Install the **Beacon Themes** extension (`AlanRoman117.beacon-themes`) from
+   the VS Code Marketplace. Its colours are identical to this theme's
+   `vscode-theme.json`.
+
+   ```bash
+   code --install-extension AlanRoman117.beacon-themes
+   ```
+
+2. Add the Beacon hook, which switches VS Code to the matching Beacon theme
+   after every Omarchy theme change:
+
+   ```bash
+   curl -fsSL -o /tmp/beacon-vscode.sh https://raw.githubusercontent.com/AlanRoman117/omarchy-beacon-theme-family/main/tools/omarchy-hooks/beacon-vscode.sh
+   omarchy hook install theme-set /tmp/beacon-vscode.sh
+   ```
+
+The hook only acts on Beacon themes, and only when the extension is installed;
+every other theme behaves exactly as before. Skip both steps and everything
+still works, you just reload VS Code after switching.
 
 - 71 text and indicator pairs checked. Every piece of resting text,
   including syntax colours, comments, line numbers and side bar labels, is at

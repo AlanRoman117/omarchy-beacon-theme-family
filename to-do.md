@@ -212,7 +212,7 @@ matching one after Omarchy's own VS Code step.
       2026-09-14:** Beacon-to-Beacon switches apply live with no reload and no
       flash; Osaka Jade still gets Ocean Green; uninstalling the extension
       falls back to "Omarchy".
-- [ ] When the extension is published: update the reload notes in the
+- [x] When the extension is published: update the reload notes in the
       per-theme READMEs (`tools/theme_readmes.py`) and the root README to say
       "install the extension and the hook". Doing it before publishing would
       point users at an extension they cannot get yet.
@@ -220,10 +220,12 @@ matching one after Omarchy's own VS Code step.
 ### Publishing, only after validation
 
 - [x] Choose the permanent publisher ID: `AlanRoman117`.
-- [ ] VS Code Marketplace: Microsoft account, Azure DevOps organisation, a
-      Personal Access Token with **Marketplace: Manage** scope for all
-      organisations, create the publisher at
-      marketplace.visualstudio.com/manage, then `npx @vscode/vsce publish`.
+- [x] VS Code Marketplace: published 2026-09-15 as **Beacon Themes**
+      (`AlanRoman117.beacon-themes`) by uploading the `.vsix` at
+      marketplace.visualstudio.com/manage, with no token needed. For updates, bump
+      `VERSION` in `tools/vscode_extension.py`, rebuild with
+      `npx @vscode/vsce package`, and upload again. Global PATs retire
+      2026-12-01; for CLI publishing use `vsce publish --azure-credential`.
 - [ ] Open VSX (VSCodium and Cursor): Eclipse account linked to GitHub, sign
       the publisher agreement, create a namespace, get a token, then
       `npx ovsx publish`.
