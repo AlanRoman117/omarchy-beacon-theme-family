@@ -318,6 +318,11 @@ Beacon closes that gap in two parts:
 Without either, everything still works; VS Code just needs a reload after each
 switch.
 
+The extension is on the VS Code Marketplace only for now. VSCodium and Cursor
+install from Open VSX, where it is not listed yet; users of those editors can
+install the `.vsix` from `vscode-extension/` by hand, and still get Beacon's
+verified colours through Omarchy either way.
+
 It is generated from the same palette objects as `colors.toml`, and
 `tools/verify.py` checks around 70 text and indicator pairs per variant. It
 refuses to write any theme where one fails. Resting surfaces step away from the

@@ -226,45 +226,74 @@ matching one after Omarchy's own VS Code step.
       `VERSION` in `tools/vscode_extension.py`, rebuild with
       `npx @vscode/vsce package`, and upload again. Global PATs retire
       2026-12-01; for CLI publishing use `vsce publish --azure-credential`.
-- [ ] Open VSX (VSCodium and Cursor): Eclipse account linked to GitHub, sign
-      the publisher agreement, create a namespace, get a token, then
-      `npx ovsx publish`.
+- Open VSX (VSCodium and Cursor): not done yet; see "Optional next steps".
 - [x] Make the repo public first. vsce rewrites relative README links and
       images to GitHub, and rejects SVG images.
 - [x] Decide where users get the hook: the family repo, with a `curl` plus
       `omarchy hook install` command in the extension README.
-- [ ] Bump `VERSION` in `tools/vscode_extension.py` whenever a palette or the VS
-      Code mapping changes, and add a publish script next to `publish.sh`.
 
-## Ideas from OldJobobo's Aonagi theme (later, optional)
+## Ideas from OldJobobo's Aonagi theme
 
-Done: every app theme Omarchy generates is now verified and patched where it
-failed (`tools/apps.py`, `APPS-REPORT.md`). Still open, in rough order of value:
-
-- [x] `icons.theme` per variant. Done: `Yaru-blue`, or `Yaru-red` on Blue-Yellow. All 22 stock themes ship one; Beacon falls back
-      to `Yaru-blue`. Pick a Yaru colour per variant (installed: blue, magenta,
-      olive, prussiangreen, purple, red, sage, wartybrown, yellow).
-- [x] Complete the four `shell.*` sections Beacon overrides, every key checked,
-      with an opaque lock card. This fixed the invisible selected-row edge.
-- [ ] Optional: style `[bar]` and `[hyprland]` borders too, as Aonagi does.
-- [ ] Showcase assets: a real desktop screenshot for `preview.png` (Neovim,
-      btop, VS Code), a palette sheet, a wallpaper contact sheet in the README,
-      and `.omarchy-theme.yml` gallery metadata.
-- [ ] Extra manually installed app themes (Zed, Zellij, Base24), each with its
-      own contrast checks.
+Done: every app theme Omarchy generates is verified and patched where it failed
+(`tools/apps.py`, `APPS-REPORT.md`); `icons.theme` ships per variant; the four
+overridden `shell.*` sections are complete with an opaque lock card; previews
+are real desktop screenshots with a generated `palette.png` alongside.
 
 Not possible for git-installed themes: `hyprland.lua` (animations, gaps),
 `neovim.lua`, `gum_env.lua` and terminal configs. Omarchy drops them on install.
 
-## Other open items
+## Optional next steps
 
-Also tracked in `CLAUDE.md`:
+Everything required shipped on 2026-09-15. These are improvements, roughly in
+order of value:
 
-- [ ] Emit full `shell.*.toml` sections from the palette in `tools/assets.py`
-      (overrides currently drop the template keys they do not list), and set
-      `[lock] background-alpha = 1.0`.
-- [ ] Make `tools/check-wallpaper.py` region-aware: gate on the centre, report
-      the rest as advisory.
-- [x] Replace the `YOURNAME` GitHub owner in `README.md`, `publish.sh` and
-      `tools/theme_readmes.py`. The git remote points at `AlanRoman117`.
-- [x] Before going public: one `omarchy theme install` per theme from GitHub. Done 2026-09-15; all six install with nothing dropped.
+- [ ] **Open VSX listing**, so VSCodium and Cursor users can install Beacon
+      Themes. Sign in at open-vsx.org with GitHub, link an Eclipse account, sign
+      the publisher agreement, create an access token, then run
+      `npx ovsx create-namespace AlanRoman117 -p <token>` and
+      `npx ovsx publish vscode-extension/beacon-themes-0.1.0.vsix -p <token>`.
+      Once live, mention it next to the Marketplace link in the READMEs.
+- [ ] **Region-aware wallpaper audit.** Make `tools/check-wallpaper.py` gate on
+      the central third and report the rest as advisory (see CLAUDE.md, Known
+      limitation). The one-off scripts used in review did this already.
+- [ ] **Omarchy theme gallery.** Find out what reads `.omarchy-theme.yml`
+      (Aonagi ships `gallery: true`), and whether submitting needs the 1200x675
+      WebP under 100 KB noted in each `backgrounds/README.md`.
+- [ ] **Boot unlock screen.** Every stock theme ships `unlock.png` and
+      `preview-unlock.png` for the disk-unlock screen (`omarchy-plymouth-*`).
+      Confirm Omarchy uses them for git-installed themes before generating any.
+- [ ] **Style `[bar]` and `[hyprland]` borders** through `shell.*.toml` section
+      overrides, as Aonagi does. Write every template key and check each pair,
+      like the four existing sections.
+- [ ] **btop graph dots on light themes.** Braille graph dots in dark colours
+      look faint at small font sizes. Option: an `apps.py` rule that swaps btop
+      graph gradients to the palette's strongest colours (Lc 90+) on light
+      variants, and a README tip that `graph_symbol = "block"` in btop reads
+      clearly everywhere.
+- [ ] **Extension publishing from the command line.** Manual `.vsix` upload
+      works. For scripted releases use `vsce publish --azure-credential` (global
+      PATs retire 2026-12-01) and add a publish script next to `publish.sh`.
+- [ ] **Upstream conversation.** Either propose Beacon for Omarchy's stock
+      themes, where a normal `vscode.json` gives live VS Code switching with no
+      hook, or suggest letting git-installed themes name a VS Code theme when
+      the extension is already installed.
+- [ ] **Extra manually installed app themes** (Zed, Zellij, Base24), each with
+      its own contrast checks.
+- [ ] **Red-Green Dark 01 dune:** faint lighter blotches in the upper dune,
+      visible only at 1:1. Touch up and re-audit if you revisit it.
+- [ ] **Housekeeping:** delete the unredacted raw screenshots in `~/Pictures`
+      (`screenshot-2026-09-14_*` and `screenshot-2026-09-15_*`).
+
+## Maintenance checklist
+
+- **After changing anything in `themes/` or the generators:** run the full
+  regeneration from CLAUDE.md, open a pull request into `main`, merge, then run
+  `./publish.sh` from `main`.
+- **After `omarchy update`:** run `python3 tools/apps.py --parity` with a Beacon
+  theme active, then `python3 tools/apps.py`, so shipped app files and shell
+  sections pick up any new template keys.
+- **VS Code extension update:** bump `VERSION` in `tools/vscode_extension.py`,
+  run it, `cd vscode-extension && npx @vscode/vsce package`, and upload the new
+  `.vsix` at marketplace.visualstudio.com/manage.
+- **Retaking previews:** keep the documented layout, blur the regions listed in
+  CLAUDE.md before committing, and never commit a raw capture.

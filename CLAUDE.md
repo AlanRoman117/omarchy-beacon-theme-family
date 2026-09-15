@@ -410,6 +410,12 @@ Recorded so they are not relitigated.
   extension ID is `AlanRoman117.beacon-themes`. It is permanent once published.
   The Marketplace display name is **Beacon Themes**: display names must be
   unique (case-insensitive), and "beacon" was already taken.
+- **The extension is published by manual `.vsix` upload** at
+  marketplace.visualstudio.com/manage (live 2026-09-15, v0.1.0). No Azure DevOps
+  token was needed. Microsoft retires global PATs on 2026-12-01, so scripted
+  publishing should use `vsce publish --azure-credential` rather than a PAT.
+  Not yet on Open VSX, so VSCodium and Cursor users cannot install it from their
+  gallery.
 - **The hook ships from the family repo, not the themes.** Themes stay
   colour-only; the extension README gives a `curl` plus
   `omarchy hook install theme-set` command pointing at
@@ -431,11 +437,14 @@ Recorded so they are not relitigated.
 
 ## Open items
 
-Published 2026-09-15: the family repo is public, and all six theme repos were
-created by `publish.sh` and install from GitHub with nothing dropped. Re-run
-`publish.sh` from `main` after any change to `themes/`.
+Published 2026-09-15: the family repo is public, all six theme repos were
+created by `publish.sh` and install from GitHub with nothing dropped, and the
+VS Code extension is live on the Marketplace.
 
-1. Region-aware wallpaper audit (see above).
+Optional improvements and the maintenance checklist live in `to-do.md`
+("Optional next steps" and "Maintenance checklist"). The most useful are an
+Open VSX listing, the region-aware wallpaper audit, and checking what
+`.omarchy-theme.yml` and `unlock.png` do for git-installed themes.
 
 ## Testing findings worth keeping
 
