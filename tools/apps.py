@@ -369,7 +369,33 @@ def parity():
     return ok
 
 
+def shell_coverage():
+    """Every key Omarchy's template sets in a section Beacon overrides must be
+    in Beacon's file, because an override replaces the whole section."""
+    tpl = open(template_path("shell.toml")).read()
+    problems = []
+    for name in VARIANTS:
+        d = os.path.join(OUT, name)
+        for f in sorted(os.listdir(d)):
+            m = re.fullmatch(r"shell\.([A-Za-z0-9_-]+)\.toml", f)
+            if not m:
+                continue
+            sec = re.search(rf"(?ms)^\[{re.escape(m.group(1))}\]\s*$(.*?)(?=^\[|\Z)", tpl)
+            if not sec:
+                problems.append(f"{name}: {f} overrides a section the template no longer has")
+                continue
+            want = set(re.findall(r"(?m)^([A-Za-z0-9_-]+)\s*=", sec.group(1)))
+            have = set(re.findall(r"(?m)^([A-Za-z0-9_-]+)\s*=", open(os.path.join(d, f)).read()))
+            if want - have:
+                problems.append(f"{name}: {f} is missing {sorted(want - have)}")
+    return problems
+
+
 def main():
+    coverage = shell_coverage()
+    if coverage:
+        print("\n".join(coverage))
+        raise SystemExit("Shell section overrides miss template keys; update tools/assets.py.")
     report = ["# App theme report", "",
               "Omarchy generates these app themes from each palette. Every pair "
               "below is measured on the file Omarchy would render. Where a pair "

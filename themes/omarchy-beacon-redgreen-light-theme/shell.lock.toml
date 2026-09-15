@@ -2,6 +2,14 @@
 # section, so no [header] is needed. Only this section is replaced;
 # the rest of shell.toml is still generated from the default template.
 
-text        = "#0F0F0E"
-placeholder = "#4B575E"
-border      = "#004188"
+background       = "#FAF9F6"
+background-alpha = 1.0
+text             = "#0F0F0E"
+placeholder      = "#4B575E"
+text-error       = "#581600"
+border           = "#004188"
+border-active    = "#003674"
+border-error     = "#581600"
+border-alpha     = 1.0
+selection        = "#8BA0BA"
+selection-alpha  = 1.0

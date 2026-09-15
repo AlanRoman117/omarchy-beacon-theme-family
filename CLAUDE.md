@@ -37,7 +37,7 @@ exactly the people who most need accurate information.
 | `themes/*/vscode-theme.json` | `tools/verify.py` (built by `tools/vscode.py`) |
 | `vscode-extension/` | `tools/vscode_extension.py` |
 | `themes/*/btop.theme`, `pi.json`, `claude.json`, `t3code.json`, `hermes.yaml`, `obsidian.css`, `APPS-REPORT.md` | `tools/apps.py` (needs Omarchy) |
-| `themes/*/shell.*.toml` | `tools/assets.py` |
+| `themes/*/shell.*.toml`, `themes/*/icons.theme` | `tools/assets.py` |
 | `themes/*/backgrounds/README.md` | `tools/assets.py` |
 | `themes/*/README.md` | `tools/theme_readmes.py` |
 | `themes/*/preview.png`, `cvd-proof.png` | `tools/preview.py` |
@@ -210,11 +210,19 @@ since Omarchy iterates fast.
 - **Missing `colors.toml` keys fall back silently.** `omarchy-theme-color`
   substitutes `yellow` for a missing `orange`, among others. Run
   `omarchy-theme-color --file colors.toml --all` to see what templates receive.
-- **Section overrides replace the whole section.** A `shell.lock.toml` with
-  three keys drops the other nine `[lock]` keys from the template. The shell
-  then falls back to palette-derived defaults in
-  `$OMARCHY_PATH/shell/Commons/Color.qml`, which are unverified. `[lock]` has a
-  `background`/`background-alpha` card behind the password field, default 0.8.
+- **Section overrides replace the whole section,** so Beacon's `shell.*.toml`
+  files write every key the template sets, and `assets.py` checks each pair.
+  The shell's fallbacks in `$OMARCHY_PATH/shell/Commons/Color.qml` are not always
+  safe: `menu.selected-border-alpha` falls back to **0.0**, so the old
+  `shell.menu.toml`, which set only `selected-border`, left the advertised
+  selected-row edge fully invisible. `apps.py` fails if a future template adds a
+  key to an overridden section that Beacon does not write.
+- **The lock card is opaque.** `[lock] background-alpha = 1.0` (template default
+  0.8) keeps the password field's text at its verified contrast over any
+  wallpaper. `urgent` in the shell is loaded from the palette's `red`.
+- **Icons:** every stock theme ships `icons.theme`. Without one Omarchy sets
+  `Yaru-blue`. Beacon matches the accent: `Yaru-blue`, or `Yaru-red` on the
+  Blue-Yellow variants, whose hue policy forbids blue.
 - **Install needs a full git URL.** `omarchy-theme-install` passes its argument
   straight to `git clone`, so `owner/repo` shorthand is treated as a local path
   and fails. Document `omarchy theme install https://github.com/AlanRoman117/<repo>.git`.
@@ -384,12 +392,8 @@ Recorded so they are not relitigated.
 
 ## Open items
 
-1. `shell.*.toml` overrides drop every template key they do not list (see
-   platform facts). Emit the full section from the palette in `assets.py`, and
-   set `[lock] background-alpha = 1.0`, which would resolve the wallpaper
-   tension for every image at once.
-2. Region-aware wallpaper audit (see above).
-3. Before going public: one `omarchy theme install` per theme from GitHub.
+1. Region-aware wallpaper audit (see above).
+2. Before going public: one `omarchy theme install` per theme from GitHub.
    All six already install cleanly from local `file://` subtree splits with no
    dropped files, so this only confirms the published repos.
 

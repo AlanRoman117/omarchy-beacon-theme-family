@@ -2,8 +2,17 @@
 # section, so no [header] is needed. Only this section is replaced;
 # the rest of shell.toml is still generated from the default template.
 
-selected-border       = "#FF968F"
-selected-border-width = "1 1 1 4"
-border                = "#636D77"
-border-width          = 2
-border-alpha          = 1.0
+background                = "#10141A"
+background-alpha          = 1.0
+text                      = "#D8DFE8"
+border                    = "#636D77"
+border-width              = 2
+border-alpha              = 1.0
+scrim                     = "#10141A"
+scrim-alpha               = 0.5
+selected-background       = "#D8DFE8"
+selected-background-alpha = 0.08
+selected-text             = "#FF968F"
+selected-border           = "#FF968F"
+selected-border-width     = "1 1 1 4"
+selected-border-alpha     = 1.0

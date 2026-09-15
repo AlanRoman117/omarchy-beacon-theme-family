@@ -2,7 +2,7 @@
 prompts, and the installer."""
 import os
 from verify import VARIANTS, build, OUT
-from colorlib import contrast
+from colorlib import contrast, hex_to_rgb, rgb_to_hex
 
 HEADER = ("# Section override for the Omarchy shell. The filename selects the\n"
           "# section, so no [header] is needed. Only this section is replaced;\n"
@@ -149,6 +149,24 @@ HUE_NOTE = {
 }
 
 
+ICONS = {"blue": "Yaru-blue", "red": "Yaru-red"}
+TEXT, HIGHLIGHT, NONTEXT = 7.0, 4.5, 3.0
+
+
+def over(color, alpha, under):
+    """The shell draws a state fill as `color` at `alpha` over the surface."""
+    c, u = hex_to_rgb(color), hex_to_rgb(under)
+    return rgb_to_hex(tuple(c[i] * alpha + u[i] * (1 - alpha) for i in range(3)))
+
+
+def selection_fill_alpha(fg, bg, ceiling=0.35):
+    """Strongest text-selection tint, up to Omarchy's 0.35, that keeps 4.5:1."""
+    alpha = ceiling
+    while alpha > 0.05 and contrast(fg, over(fg, alpha, bg)) < HIGHLIGHT + 0.1:
+        alpha = round(alpha - 0.01, 2)
+    return alpha
+
+
 def write(path, text):
     with open(path, "w") as f:
         f.write(text)
@@ -161,45 +179,122 @@ def main():
         acc, fg, bfg = p["accent"], p["foreground"], p["bright_foreground"]
         muted, inact = p["muted"], p["inactive_border"]
 
-        # Controls. Focus is 3px on every side rather than a thin ring, and every
-        # border alpha is 1.0 -- translucency silently eats the 3:1 that
-        # WCAG 1.4.11 requires of a control boundary.
+        bgc = p["background"]
+        acc_bright = p["bright_" + spec["accent_slot"]]
+        # Every key of each section is written, because an override replaces the
+        # whole section and the shell's fallbacks are not always safe:
+        # menu.selected-border-alpha falls back to 0.0, which made the selected
+        # row's edge cue invisible while only selected-border was set.
+        sel_alpha = selection_fill_alpha(fg, bgc)
+        checks = [
+            ("controls normal", fg, over(fg, 0.04, bgc), TEXT),
+            ("controls hover", bfg, over(bfg, 0.08, bgc), TEXT),
+            ("controls focus", bfg, over(bfg, 0.08, bgc), TEXT),
+            ("controls selected", bfg, over(bfg, 0.18, bgc), TEXT),
+            ("controls pressed", bfg, over(bfg, 0.22, bgc), HIGHLIGHT),
+            ("controls text selection", fg, over(fg, sel_alpha, bgc), HIGHLIGHT),
+            ("controls borders", muted, bgc, NONTEXT),
+            ("controls focus ring", acc, bgc, NONTEXT),
+            ("notification text", fg, bgc, TEXT),
+            ("notification border", acc, bgc, NONTEXT),
+            ("menu text", fg, bgc, TEXT),
+            ("menu selected text", acc, over(fg, 0.08, bgc), TEXT),
+            ("menu border", inact, bgc, NONTEXT),
+            ("menu selected edge", acc, over(fg, 0.08, bgc), NONTEXT),
+            ("lock text", bfg, bgc, TEXT),
+            ("lock placeholder", muted, bgc, TEXT),
+            ("lock error text", p["red"], bgc, TEXT),
+            ("lock selected text", bfg, p["selection"], TEXT),
+            ("lock borders", acc, bgc, NONTEXT),
+            ("lock border, typing", acc_bright, bgc, NONTEXT),
+            ("lock border, error", p["red"], bgc, NONTEXT),
+        ]
+        failed = [(a, contrast(f, b), m) for a, f, b, m in checks if contrast(f, b) < m]
+        if failed:
+            raise SystemExit(f"{name}: shell sections fail: {failed}")
+
+        # Controls. Focus is 3px on every side rather than a thin ring, the
+        # selected state gets a 2px edge rather than none, and every border alpha
+        # is 1.0 -- translucency silently eats the 3:1 that WCAG 1.4.11 requires
+        # of a control boundary.
         write(os.path.join(d, "shell.controls.toml"), HEADER + f"""normal-color        = "{fg}"
+normal-fill-alpha   = 0.04
 normal-border       = "{muted}"
 normal-border-width = 1
 normal-border-alpha = 1.0
 
 hover-cursor-color        = "{bfg}"
+hover-cursor-fill-alpha   = 0.08
 hover-cursor-border       = "{acc}"
 hover-cursor-border-width = 2
 hover-cursor-border-alpha = 1.0
 
+focus-color        = "{bfg}"
+focus-fill-alpha   = 0.08
 focus-border       = "{acc}"
 focus-border-width = 3
 focus-border-alpha = 1.0
+
+selected-color        = "{bfg}"
+selected-fill-alpha   = 0.18
+selected-border       = "{acc}"
+selected-border-width = 2
+selected-border-alpha = 1.0
+
+pressed-fill-alpha   = 0.22
+selection-fill-alpha = {sel_alpha:.2f}
 """)
 
         # Notifications. The heavy left edge is a non-colour cue, so urgency is
         # not carried by hue alone (WCAG 1.4.1).
-        write(os.path.join(d, "shell.notifications.toml"), HEADER + f"""border            = "{acc}"
+        write(os.path.join(d, "shell.notifications.toml"), HEADER + f"""background        = "{bgc}"
+background-alpha  = 1.0
+text              = "{fg}"
+border            = "{acc}"
 border-alpha      = 1.0
 border-width      = 2
 border-width-left = 6
+countdown         = "{acc}"
 """)
 
         # Menu. Selection is marked by a 4px left edge as well as a fill, again
         # so the cue survives without colour discrimination.
-        write(os.path.join(d, "shell.menu.toml"), HEADER + f"""selected-border       = "{acc}"
-selected-border-width = "1 1 1 4"
-border                = "{inact}"
-border-width          = 2
-border-alpha          = 1.0
+        write(os.path.join(d, "shell.menu.toml"), HEADER + f"""background                = "{bgc}"
+background-alpha          = 1.0
+text                      = "{fg}"
+border                    = "{inact}"
+border-width              = 2
+border-alpha              = 1.0
+scrim                     = "{bgc}"
+scrim-alpha               = 0.5
+selected-background       = "{fg}"
+selected-background-alpha = 0.08
+selected-text             = "{acc}"
+selected-border           = "{acc}"
+selected-border-width     = "1 1 1 4"
+selected-border-alpha     = 1.0
 """)
 
-        write(os.path.join(d, "shell.lock.toml"), HEADER + f"""text        = "{bfg}"
-placeholder = "{muted}"
-border      = "{acc}"
+        # Lock. The password card is fully opaque, so its text keeps its verified
+        # contrast over any wallpaper. The default 0.8 lets a bright image show
+        # through behind the text.
+        write(os.path.join(d, "shell.lock.toml"), HEADER + f"""background       = "{bgc}"
+background-alpha = 1.0
+text             = "{bfg}"
+placeholder      = "{muted}"
+text-error       = "{p['red']}"
+border           = "{acc}"
+border-active    = "{acc_bright}"
+border-error     = "{p['red']}"
+border-alpha     = 1.0
+selection        = "{p['selection']}"
+selection-alpha  = 1.0
 """)
+
+        # GTK icon colour. Every stock Omarchy theme ships one; without it Omarchy
+        # falls back to Yaru-blue. Matched to the accent, which also keeps
+        # Blue-Yellow variants off the blue their hue policy forbids.
+        write(os.path.join(d, "icons.theme"), ICONS[spec["accent_slot"]])
 
         bg = os.path.join(d, "backgrounds")
         images = sorted(f for f in os.listdir(bg)

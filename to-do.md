@@ -240,12 +240,12 @@ matching one after Omarchy's own VS Code step.
 Done: every app theme Omarchy generates is now verified and patched where it
 failed (`tools/apps.py`, `APPS-REPORT.md`). Still open, in rough order of value:
 
-- [ ] `icons.theme` per variant. All 22 stock themes ship one; Beacon falls back
+- [x] `icons.theme` per variant. Done: `Yaru-blue`, or `Yaru-red` on Blue-Yellow. All 22 stock themes ship one; Beacon falls back
       to `Yaru-blue`. Pick a Yaru colour per variant (installed: blue, magenta,
       olive, prussiangreen, purple, red, sage, wartybrown, yellow).
-- [ ] Complete `shell.*` sections, including `[bar]` and `[hyprland]` borders,
-      which Aonagi styles through `shell.toml`. Overlaps open item 1 in
-      CLAUDE.md.
+- [x] Complete the four `shell.*` sections Beacon overrides, every key checked,
+      with an opaque lock card. This fixed the invisible selected-row edge.
+- [ ] Optional: style `[bar]` and `[hyprland]` borders too, as Aonagi does.
 - [ ] Showcase assets: a real desktop screenshot for `preview.png` (Neovim,
       btop, VS Code), a palette sheet, a wallpaper contact sheet in the README,
       and `.omarchy-theme.yml` gallery metadata.

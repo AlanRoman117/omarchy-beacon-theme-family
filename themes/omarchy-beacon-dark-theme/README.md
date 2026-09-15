@@ -108,10 +108,11 @@ The full table is in `CONTRAST-REPORT.md` in the family repo.
 | File | Purpose |
 |---|---|
 | `colors.toml` | The palette. Omarchy generates every app config from this. |
-| `shell.controls.toml` | Focus rings at 3px, all border alphas pinned to 1.0. |
+| `shell.controls.toml` | Focus rings at 3px, a 2px edge on selected controls, all border alphas pinned to 1.0. |
 | `shell.notifications.toml` | 6px left edge as a non-colour urgency cue. |
-| `shell.menu.toml` | Selected rows marked by an edge, not only a fill. |
-| `shell.lock.toml` | Lock screen text and placeholder contrast. |
+| `shell.menu.toml` | Selected rows marked by a 4px edge, not only a fill. |
+| `shell.lock.toml` | Opaque password card, so lock screen text keeps its contrast over any wallpaper. |
+| `icons.theme` | GTK icon colour matched to the accent (`Yaru-blue`, or `Yaru-red` on Blue-Yellow). |
 | `preview.png` | Theme-switcher preview, 1200x675. |
 | `cvd-proof.png` | Simulation proof sheet. |
 | `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |

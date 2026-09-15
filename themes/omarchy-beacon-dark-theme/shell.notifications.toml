@@ -2,7 +2,11 @@
 # section, so no [header] is needed. Only this section is replaced;
 # the rest of shell.toml is still generated from the default template.
 
+background        = "#10141A"
+background-alpha  = 1.0
+text              = "#D8DFE8"
 border            = "#99C6FF"
 border-alpha      = 1.0
 border-width      = 2
 border-width-left = 6
+countdown         = "#99C6FF"
