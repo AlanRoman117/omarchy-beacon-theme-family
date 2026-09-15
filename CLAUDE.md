@@ -264,11 +264,11 @@ for; "protanopia" goes in the description where search still catches it. Avoid
 real desktop screenshot at 1800x1012, so Beacon does too; the generated palette
 swatch that used to fill it is now `palette.png`, shown in each README.
 
-Captured 2026-09-14 with `omarchy capture screenshot` at 1920x1080: Neovim,
-a terminal, btop and Files, with that variant's first wallpaper, then resized
-with Lanczos to 1800x1012. To redo one, keep the same four-window layout across
-all six, so the switcher compares like with like. The first capture, Beacon
-Dark, has btop and Files swapped relative to the other five. The captures show
+Captured 2026-09-14 with `omarchy capture screenshot` at 1920x1080, then resized
+with Lanczos to 1800x1012. All six use the same layout: Neovim top left, btop
+top right, a terminal bottom left, Files bottom right, over that variant's
+wallpaper. To redo one, keep that layout, so the switcher compares like with
+like. The captures show
 the user's username, home folder names, a drive label and a private LAN
 address; the user decides whether that is acceptable before publishing.
 
