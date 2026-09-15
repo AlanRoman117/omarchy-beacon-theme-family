@@ -13,7 +13,8 @@ APP_LABEL = {
     "obsidian.css": "Obsidian",
 }
 
-FAMILY = "https://github.com/YOURNAME/omarchy-beacon-theme-family"
+OWNER = "AlanRoman117"
+FAMILY = f"https://github.com/{OWNER}/omarchy-beacon-theme-family"
 
 META = {
     "omarchy-beacon-dark-theme": dict(
@@ -119,7 +120,7 @@ ships the verification tooling, and contains the other five variants.
 ## Install
 
 ```bash
-omarchy theme install {family_owner}/{name}
+omarchy theme install https://github.com/{family_owner}/{name}.git
 omarchy theme set {short}
 ```
 
@@ -293,7 +294,7 @@ def main():
         short = name.replace("omarchy-", "").replace("-theme", "")
         text = TPL.format(
             title=m["title"], tagline=m["tagline"], who=m["who"],
-            family=FAMILY, family_owner="YOURNAME", name=name, short=short,
+            family=FAMILY, family_owner=OWNER, name=name, short=short,
             mode=m["mode"], mode_title=m["mode"].title(), bg=bg,
             rows=rows, cols=cols, sep="\n".join(sep_rows),
             worst=f"{min([contrast(p[k], bg) for k in ('foreground','light_foreground','bright_foreground','dark_foreground','muted','accent','orange')] + [contrast(v, bg) for v in p['_normals'].values()] + [contrast(v, bg) for v in p['_brights'].values()]):.2f}",

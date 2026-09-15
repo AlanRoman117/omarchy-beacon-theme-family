@@ -2,7 +2,7 @@
 
 High-contrast light theme for Omarchy 4 Quattro. Every colour verified at WCAG AAA 7:1, including comment text and all sixteen ANSI slots.
 
-Part of the [Beacon theme family](https://github.com/YOURNAME/omarchy-beacon-theme-family), which explains the design method,
+Part of the [Beacon theme family](https://github.com/AlanRoman117/omarchy-beacon-theme-family), which explains the design method,
 ships the verification tooling, and contains the other five variants.
 
 ![preview](preview.png)
@@ -10,7 +10,7 @@ ships the verification tooling, and contains the other five variants.
 ## Install
 
 ```bash
-omarchy theme install YOURNAME/omarchy-beacon-light-theme
+omarchy theme install https://github.com/AlanRoman117/omarchy-beacon-light-theme.git
 omarchy theme set beacon-light
 ```
 

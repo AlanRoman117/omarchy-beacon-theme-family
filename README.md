@@ -32,12 +32,12 @@ what this family does.
 
 | Theme | Repo | Mode | Tuned for |
 |---|---|---|---|
-| Beacon Dark | [`omarchy-beacon-dark-theme`](../../../omarchy-beacon-dark-theme) | dark | typical colour vision |
-| Beacon Light | [`omarchy-beacon-light-theme`](../../../omarchy-beacon-light-theme) | light | typical colour vision |
-| Beacon Red-Green Dark | [`omarchy-beacon-redgreen-dark-theme`](../../../omarchy-beacon-redgreen-dark-theme) | dark | protanopia, deuteranopia |
-| Beacon Red-Green Light | [`omarchy-beacon-redgreen-light-theme`](../../../omarchy-beacon-redgreen-light-theme) | light | protanopia, deuteranopia |
-| Beacon Blue-Yellow Dark | [`omarchy-beacon-blueyellow-dark-theme`](../../../omarchy-beacon-blueyellow-dark-theme) | dark | tritanopia |
-| Beacon Blue-Yellow Light | [`omarchy-beacon-blueyellow-light-theme`](../../../omarchy-beacon-blueyellow-light-theme) | light | tritanopia |
+| Beacon Dark | [`omarchy-beacon-dark-theme`](https://github.com/AlanRoman117/omarchy-beacon-dark-theme) | dark | typical colour vision |
+| Beacon Light | [`omarchy-beacon-light-theme`](https://github.com/AlanRoman117/omarchy-beacon-light-theme) | light | typical colour vision |
+| Beacon Red-Green Dark | [`omarchy-beacon-redgreen-dark-theme`](https://github.com/AlanRoman117/omarchy-beacon-redgreen-dark-theme) | dark | protanopia, deuteranopia |
+| Beacon Red-Green Light | [`omarchy-beacon-redgreen-light-theme`](https://github.com/AlanRoman117/omarchy-beacon-redgreen-light-theme) | light | protanopia, deuteranopia |
+| Beacon Blue-Yellow Dark | [`omarchy-beacon-blueyellow-dark-theme`](https://github.com/AlanRoman117/omarchy-beacon-blueyellow-dark-theme) | dark | tritanopia |
+| Beacon Blue-Yellow Light | [`omarchy-beacon-blueyellow-light-theme`](https://github.com/AlanRoman117/omarchy-beacon-blueyellow-light-theme) | light | tritanopia |
 
 ## Which one should I use?
 
@@ -69,7 +69,7 @@ default.
 ## Install
 
 ```bash
-omarchy theme install YOURNAME/omarchy-beacon-dark-theme
+omarchy theme install https://github.com/AlanRoman117/omarchy-beacon-dark-theme.git
 omarchy theme set beacon-dark
 ```
 

@@ -18,7 +18,7 @@ EXT = os.path.join(ROOT, "vscode-extension")
 NAME = "beacon-themes"
 PUBLISHER = "beacon-local"   # placeholder until a real publisher ID is chosen
 VERSION = "0.1.0"
-FAMILY = "https://github.com/YOURNAME/omarchy-beacon-theme-family"
+FAMILY = "https://github.com/AlanRoman117/omarchy-beacon-theme-family"
 
 TAGLINE = {
     "dark": "typical colour vision",

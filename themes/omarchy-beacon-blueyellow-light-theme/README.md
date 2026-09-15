@@ -2,7 +2,7 @@
 
 Light theme for Omarchy 4 Quattro, designed for tritanopia. Blue is separated from green and yellow from magenta; the red-green axis is left intact.
 
-Part of the [Beacon theme family](https://github.com/YOURNAME/omarchy-beacon-theme-family), which explains the design method,
+Part of the [Beacon theme family](https://github.com/AlanRoman117/omarchy-beacon-theme-family), which explains the design method,
 ships the verification tooling, and contains the other five variants.
 
 ![preview](preview.png)
@@ -10,7 +10,7 @@ ships the verification tooling, and contains the other five variants.
 ## Install
 
 ```bash
-omarchy theme install YOURNAME/omarchy-beacon-blueyellow-light-theme
+omarchy theme install https://github.com/AlanRoman117/omarchy-beacon-blueyellow-light-theme.git
 omarchy theme set beacon-blueyellow-light
 ```
 

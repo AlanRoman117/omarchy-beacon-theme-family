@@ -264,6 +264,6 @@ Also tracked in `CLAUDE.md`:
       `[lock] background-alpha = 1.0`.
 - [ ] Make `tools/check-wallpaper.py` region-aware: gate on the centre, report
       the rest as advisory.
-- [ ] Replace the `YOURNAME` GitHub owner in `README.md`, `publish.sh` and
+- [x] Replace the `YOURNAME` GitHub owner in `README.md`, `publish.sh` and
       `tools/theme_readmes.py`. The git remote points at `AlanRoman117`.
 - [ ] Before going public: one `omarchy theme install` per theme from GitHub.

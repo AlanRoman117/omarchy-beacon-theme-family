@@ -2,7 +2,7 @@
 
 Light theme for Omarchy 4 Quattro, designed for protanopia and deuteranopia. Red shifts to vermilion and green to bluish-green, tuned for the protan worst case.
 
-Part of the [Beacon theme family](https://github.com/YOURNAME/omarchy-beacon-theme-family), which explains the design method,
+Part of the [Beacon theme family](https://github.com/AlanRoman117/omarchy-beacon-theme-family), which explains the design method,
 ships the verification tooling, and contains the other five variants.
 
 ![preview](preview.png)
@@ -10,7 +10,7 @@ ships the verification tooling, and contains the other five variants.
 ## Install
 
 ```bash
-omarchy theme install YOURNAME/omarchy-beacon-redgreen-light-theme
+omarchy theme install https://github.com/AlanRoman117/omarchy-beacon-redgreen-light-theme.git
 omarchy theme set beacon-redgreen-light
 ```
 

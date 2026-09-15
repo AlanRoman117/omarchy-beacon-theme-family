@@ -50,4 +50,4 @@ The hook only acts on Beacon themes and only when this extension is installed.
 Every other Omarchy theme keeps working exactly as before.
 
 The full verification report and the tools that generate these themes are in
-the [Beacon family repository](https://github.com/YOURNAME/omarchy-beacon-theme-family).
+the [Beacon family repository](https://github.com/AlanRoman117/omarchy-beacon-theme-family).

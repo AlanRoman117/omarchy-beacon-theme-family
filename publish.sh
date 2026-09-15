@@ -6,7 +6,7 @@
 #   ./publish.sh beacon-dark     # one, by substring
 set -euo pipefail
 
-OWNER="${BEACON_OWNER:-YOURNAME}"
+OWNER="${BEACON_OWNER:-AlanRoman117}"
 FILTER="${1:-}"
 
 for dir in themes/omarchy-beacon-*/; do
@@ -22,7 +22,7 @@ done
 
 echo
 echo "Published. Verify one end to end before announcing:"
-echo "  omarchy theme install $OWNER/omarchy-beacon-dark-theme"
+echo "  omarchy theme install https://github.com/$OWNER/omarchy-beacon-dark-theme.git"
 echo "  omarchy theme set beacon-dark"
 echo
 echo "Watch stderr on that install. Omarchy names anything it drops. Beacon is"

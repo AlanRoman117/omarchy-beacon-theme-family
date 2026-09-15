@@ -215,6 +215,9 @@ since Omarchy iterates fast.
   then falls back to palette-derived defaults in
   `$OMARCHY_PATH/shell/Commons/Color.qml`, which are unverified. `[lock]` has a
   `background`/`background-alpha` card behind the password field, default 0.8.
+- **Install needs a full git URL.** `omarchy-theme-install` passes its argument
+  straight to `git clone`, so `owner/repo` shorthand is treated as a local path
+  and fails. Document `omarchy theme install https://github.com/AlanRoman117/<repo>.git`.
 - **One theme per repository.** Omarchy expects `colors.toml` at the repo root,
   which is why `themes/` is published outward via `publish.sh` subtree splits
   rather than installed from this monorepo directly.
@@ -386,10 +389,7 @@ Recorded so they are not relitigated.
    set `[lock] background-alpha = 1.0`, which would resolve the wallpaper
    tension for every image at once.
 2. Region-aware wallpaper audit (see above).
-3. Replace the `YOURNAME` GitHub owner in `README.md`, `publish.sh`, and the
-   generated per-theme READMEs (`FAMILY` and `family_owner` in
-   `tools/theme_readmes.py`). The `LICENSE` files already name Alan Roman.
-4. Before going public: one `omarchy theme install` per theme from GitHub.
+3. Before going public: one `omarchy theme install` per theme from GitHub.
    All six already install cleanly from local `file://` subtree splits with no
    dropped files, so this only confirms the published repos.
 
