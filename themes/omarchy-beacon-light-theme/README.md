@@ -66,7 +66,9 @@ the palette's weakest link under that vision type.
 | deutan | red / green | 0.026 |
 | tritan | green / blue | 0.059 |
 
-`cvd-proof.png` in this repo shows the palette rendered four times: normal
+![palette](palette.png)
+
+`palette.png` shows the full palette, and `cvd-proof.png` in this repo shows it rendered four times: normal
 vision plus all three simulations. Under deuteranopia red and green converge here. That is expected, and it is what the red-green variant exists to fix.
 
 
@@ -114,7 +116,8 @@ The full table is in `CONTRAST-REPORT.md` in the family repo.
 | `shell.lock.toml` | Opaque password card, so lock screen text keeps its contrast over any wallpaper. |
 | `icons.theme` | GTK icon colour matched to the accent (`Yaru-blue`, or `Yaru-red` on Blue-Yellow). |
 | `light.mode` | Pairs the theme with light mode across GTK apps. |
-| `preview.png` | Theme-switcher preview, 1200x675. |
+| `preview.png` | Theme-switcher preview: a real desktop screenshot, 1800x1012. |
+| `palette.png` | Palette swatch: neutral ramp, chromatic and bright rows. |
 | `cvd-proof.png` | Simulation proof sheet. |
 | `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |
 | `btop.theme` | btop: Omarchy's generated theme with its failing contrast pairs fixed. |

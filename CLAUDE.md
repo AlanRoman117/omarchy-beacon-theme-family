@@ -40,7 +40,7 @@ exactly the people who most need accurate information.
 | `themes/*/shell.*.toml`, `themes/*/icons.theme` | `tools/assets.py` |
 | `themes/*/backgrounds/README.md` | `tools/assets.py` |
 | `themes/*/README.md` | `tools/theme_readmes.py` |
-| `themes/*/preview.png`, `cvd-proof.png` | `tools/preview.py` |
+| `themes/*/palette.png`, `cvd-proof.png` | `tools/preview.py` |
 | `CONTRAST-REPORT.md` | `tools/verify.py` |
 
 To change a palette, edit the `VARIANTS` dict in `tools/verify.py` and re-run.
@@ -54,14 +54,14 @@ Full regeneration:
 python3 tools/verify.py         # palettes + VS Code themes + CONTRAST-REPORT.md
 python3 tools/assets.py         # shell overrides + background prompts
 python3 tools/theme_readmes.py  # per-theme READMEs
-python3 tools/preview.py        # preview.png + cvd-proof.png
+python3 tools/preview.py        # palette.png + cvd-proof.png
 python3 tools/vscode_extension.py  # VS Code extension package
 python3 tools/apps.py           # verify and patch Omarchy's app themes (Omarchy only)
 ```
 
 Hand-maintained: root `README.md`, this file, `publish.sh`, `LICENSE`,
-`tools/omarchy-hooks/beacon-vscode.sh`, and the
-actual wallpaper images.
+`tools/omarchy-hooks/beacon-vscode.sh`, the wallpaper images, and
+`themes/*/preview.png`, which are real desktop screenshots (see Previews).
 
 ## How the generator works
 
@@ -257,6 +257,20 @@ since Omarchy iterates fast.
 Axis names are plain language on purpose. "Red-Green" is what someone searches
 for; "protanopia" goes in the description where search still catches it. Avoid
 "accessible" in names — see the scope boundary.
+
+## Previews
+
+`preview.png` is what Omarchy's theme switcher shows. Every stock theme uses a
+real desktop screenshot at 1800x1012, so Beacon does too; the generated palette
+swatch that used to fill it is now `palette.png`, shown in each README.
+
+Captured 2026-09-14 with `omarchy capture screenshot` at 1920x1080: Neovim,
+a terminal, btop and Files, with that variant's first wallpaper, then resized
+with Lanczos to 1800x1012. To redo one, keep the same four-window layout across
+all six, so the switcher compares like with like. The first capture, Beacon
+Dark, has btop and Files swapped relative to the other five. The captures show
+the user's username, home folder names, a drive label and a private LAN
+address; the user decides whether that is acceptable before publishing.
 
 ## Wallpapers
 

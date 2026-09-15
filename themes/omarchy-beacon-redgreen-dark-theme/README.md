@@ -66,7 +66,9 @@ the palette's weakest link under that vision type.
 | deutan **(tuned for this)** | green / magenta | 0.054 |
 | tritan | blue / cyan | 0.068 |
 
-`cvd-proof.png` in this repo shows the palette rendered four times: normal
+![palette](palette.png)
+
+`palette.png` shows the full palette, and `cvd-proof.png` in this repo shows it rendered four times: normal
 vision plus all three simulations. Compare it against the default Beacon Dark proof sheet: under deuteranopia the default collapses red and green into the same olive, and this one does not.
 
 ## What is different about this variant
@@ -131,7 +133,8 @@ The full table is in `CONTRAST-REPORT.md` in the family repo.
 | `shell.menu.toml` | Selected rows marked by a 4px edge, not only a fill. |
 | `shell.lock.toml` | Opaque password card, so lock screen text keeps its contrast over any wallpaper. |
 | `icons.theme` | GTK icon colour matched to the accent (`Yaru-blue`, or `Yaru-red` on Blue-Yellow). |
-| `preview.png` | Theme-switcher preview, 1200x675. |
+| `preview.png` | Theme-switcher preview: a real desktop screenshot, 1800x1012. |
+| `palette.png` | Palette swatch: neutral ramp, chromatic and bright rows. |
 | `cvd-proof.png` | Simulation proof sheet. |
 | `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |
 | `btop.theme` | btop: Omarchy's generated theme with its failing contrast pairs fixed. |

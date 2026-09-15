@@ -253,7 +253,8 @@ which affect far more people than tritanopia does. Check against it.
 | `shell.lock.toml` | Opaque password card, so lock screen text keeps its contrast over any wallpaper. |
 | `icons.theme` | GTK icon colour matched to the accent (`Yaru-blue`, or `Yaru-red` on Blue-Yellow). |
 | `light.mode` | Light variants only. |
-| `preview.png` | Theme-switcher preview, 1200x675. |
+| `preview.png` | Theme-switcher preview: a real desktop screenshot, 1800x1012. |
+| `palette.png` | Palette swatch: neutral ramp, chromatic and bright rows. |
 | `cvd-proof.png` | Simulation proof sheet. |
 | `vscode-theme.json` | VS Code, VSCodium and Cursor theme, generated and verified with the palette. |
 | `btop.theme`, `pi.json`, `claude.json`, `t3code.json`, `hermes.yaml`, `obsidian.css` | Omarchy's generated app themes, with their failing contrast pairs fixed. |
@@ -359,7 +360,7 @@ omarchy-beacon-theme-family/
 │   ├── apps.py              # verifies and patches Omarchy's generated app themes
 │   ├── assets.py            # generates shell overrides + background prompts
 │   ├── theme_readmes.py     # generates each theme's README from its palette
-│   ├── preview.py           # generates preview.png + cvd-proof.png
+│   ├── preview.py           # generates palette.png + cvd-proof.png
 │   └── check-wallpaper.py   # wallpaper CVD + luminance audit
 ├── publish.sh               # subtree-splits themes/ into the six repos
 └── CONTRAST-REPORT.md
@@ -376,7 +377,7 @@ cannot drift from the colours.
 python3 tools/verify.py         # palettes + VS Code themes + CONTRAST-REPORT.md
 python3 tools/assets.py         # shell overrides + background prompts
 python3 tools/theme_readmes.py  # per-theme READMEs
-python3 tools/preview.py        # preview.png + cvd-proof.png
+python3 tools/preview.py        # palette.png + cvd-proof.png
 python3 tools/check-wallpaper.py --mode dark  themes/*/backgrounds/*-dark-*.jpg
 python3 tools/check-wallpaper.py --mode light themes/*/backgrounds/*-light-*.jpg
 ```

@@ -1,4 +1,4 @@
-"""Render preview.png for each variant, plus a CVD proof sheet showing how the
+"""Render palette.png for each variant, plus a CVD proof sheet showing how the
 palette holds up under simulated protanopia, deuteranopia and tritanopia."""
 import os
 from PIL import Image, ImageDraw
@@ -56,7 +56,7 @@ def main():
     for name, spec in VARIANTS.items():
         p = build(spec)
         d = os.path.join(OUT, name)
-        swatch(p).save(os.path.join(d, "preview.png"), optimize=True)
+        swatch(p).save(os.path.join(d, "palette.png"), optimize=True)
 
         # proof sheet: normal + three simulations stacked
         sheet = Image.new("RGB", (W, H * 4), (0, 0, 0))
