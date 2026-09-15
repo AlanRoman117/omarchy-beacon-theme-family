@@ -43,8 +43,12 @@ normally needs **Developer: Reload Window** after every theme switch. With this
 extension installed, add the Beacon hook once and switching becomes live:
 
 ```bash
-omarchy hook install theme-set /path/to/beacon-vscode.sh
+curl -fsSL -o /tmp/beacon-vscode.sh https://raw.githubusercontent.com/AlanRoman117/omarchy-beacon-theme-family/main/tools/omarchy-hooks/beacon-vscode.sh
+omarchy hook install theme-set /tmp/beacon-vscode.sh
 ```
+
+Read the script first if you like; it is about sixty lines and only edits the
+`workbench.colorTheme` line of VS Code, VSCodium or Cursor settings.
 
 The hook only acts on Beacon themes and only when this extension is installed.
 Every other Omarchy theme keeps working exactly as before.

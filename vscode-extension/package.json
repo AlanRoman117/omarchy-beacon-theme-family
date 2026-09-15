@@ -3,7 +3,7 @@
   "displayName": "Beacon",
   "description": "High-contrast themes solved for WCAG AAA, with red-green and blue-yellow safe variants for colour vision deficiency.",
   "version": "0.1.0",
-  "publisher": "beacon-local",
+  "publisher": "AlanRoman117",
   "license": "MIT",
   "icon": "icon.png",
   "engines": {

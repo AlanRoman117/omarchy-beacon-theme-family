@@ -219,7 +219,7 @@ matching one after Omarchy's own VS Code step.
 
 ### Publishing, only after validation
 
-- [ ] Choose the permanent publisher ID (AlanRoman117 matches the GitHub remote).
+- [x] Choose the permanent publisher ID: `AlanRoman117`.
 - [ ] VS Code Marketplace: Microsoft account, Azure DevOps organisation, a
       Personal Access Token with **Marketplace: Manage** scope for all
       organisations, create the publisher at
@@ -229,9 +229,8 @@ matching one after Omarchy's own VS Code step.
       `npx ovsx publish`.
 - [ ] Make the repo public first. vsce rewrites relative README links and
       images to GitHub, and rejects SVG images.
-- [ ] Decide where users get the hook: inside each theme repo (on disk after
-      `omarchy theme install`, but a script in a colour-only theme) or the
-      family repo with a download command.
+- [x] Decide where users get the hook: the family repo, with a `curl` plus
+      `omarchy hook install` command in the extension README.
 - [ ] Bump `VERSION` in `tools/vscode_extension.py` whenever a palette or the VS
       Code mapping changes, and add a publish script next to `publish.sh`.
 

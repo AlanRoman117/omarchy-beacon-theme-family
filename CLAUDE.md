@@ -404,6 +404,17 @@ Recorded so they are not relitigated.
   drops cleanly into Omarchy's own `themes/` if a variant is ever upstreamed.
 - **Monorepo + subtree split**, not six independent repos. Authoring happens
   once; `publish.sh` pushes outward. Six hand-maintained repos would drift.
+  It pushes over HTTPS with the `gh` login (no SSH key is registered) and
+  creates missing theme repos as public.
+- **VS Code extension publisher is `AlanRoman117`** (decided 2026-09-15), so the
+  extension ID is `AlanRoman117.beacon-themes`. It is permanent once published.
+- **The hook ships from the family repo, not the themes.** Themes stay
+  colour-only; the extension README gives a `curl` plus
+  `omarchy hook install theme-set` command pointing at
+  `tools/omarchy-hooks/beacon-vscode.sh` on `main`. Moving or renaming that
+  file breaks the published instructions.
+- **Commit author email is public by choice.** The user kept their personal
+  address on commits when going public (2026-09-15).
 - **"Beacon", not "Signal".** 37signals is DHH's company and the origin of
   Omarchy, so a theme called Signal there would read as semi-official.
 - **Protanopia and deuteranopia share one variant; tritanopia gets its own.**
