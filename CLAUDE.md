@@ -276,9 +276,13 @@ like. The username, drive
 label and LAN address are blurred (pixelated, then Gaussian-blurred) in the
 shipped previews; the raw captures in `~/Pictures` are not redacted.
 
-**Before going public, rewrite git history.** Commits `035bee4` and `7c93578`
-contain unredacted previews, and `publish.sh` subtree-splits that history into
-the theme repos. Rewriting needs a force-push, so it needs the user's go-ahead.
+**History was cleaned on 2026-09-15.** Early preview commits held unredacted
+screenshots. They were rewritten with `git filter-branch` to carry only the
+final blurred files. GitHub kept serving the old commits by SHA after the
+force-push, so the GitHub repo was deleted and recreated, and local reflogs
+and objects were pruned. Never commit an unredacted capture: GitHub keeps
+force-pushed commits reachable, and `publish.sh` copies history into the
+theme repos.
 
 ## Wallpapers
 
