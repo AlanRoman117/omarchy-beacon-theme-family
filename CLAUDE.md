@@ -268,9 +268,13 @@ Captured 2026-09-14 with `omarchy capture screenshot` at 1920x1080, then resized
 with Lanczos to 1800x1012. All six use the same layout: Neovim top left, btop
 top right, a terminal bottom left, Files bottom right, over that variant's
 wallpaper. To redo one, keep that layout, so the switcher compares like with
-like. The captures show
-the user's username, home folder names, a drive label and a private LAN
-address; the user decides whether that is acceptable before publishing.
+like. The username, drive
+label and LAN address are blurred (pixelated, then Gaussian-blurred) in the
+shipped previews; the raw captures in `~/Pictures` are not redacted.
+
+**Before going public, rewrite git history.** Commits `035bee4` and `7c93578`
+contain unredacted previews, and `publish.sh` subtree-splits that history into
+the theme repos. Rewriting needs a force-push, so it needs the user's go-ahead.
 
 ## Wallpapers
 
