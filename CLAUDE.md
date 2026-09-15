@@ -35,6 +35,7 @@ exactly the people who most need accurate information.
 |---|---|
 | `themes/*/colors.toml` | `tools/verify.py` |
 | `themes/*/vscode-theme.json` | `tools/verify.py` (built by `tools/vscode.py`) |
+| `vscode-extension/` | `tools/vscode_extension.py` |
 | `themes/*/shell.*.toml` | `tools/assets.py` |
 | `themes/*/backgrounds/README.md` | `tools/assets.py` |
 | `themes/*/README.md` | `tools/theme_readmes.py` |
@@ -53,9 +54,11 @@ python3 tools/verify.py         # palettes + VS Code themes + CONTRAST-REPORT.md
 python3 tools/assets.py         # shell overrides + background prompts
 python3 tools/theme_readmes.py  # per-theme READMEs
 python3 tools/preview.py        # preview.png + cvd-proof.png
+python3 tools/vscode_extension.py  # VS Code extension package
 ```
 
-Hand-maintained: root `README.md`, this file, `publish.sh`, `LICENSE`, and the
+Hand-maintained: root `README.md`, this file, `publish.sh`, `LICENSE`,
+`tools/omarchy-hooks/beacon-vscode.sh`, and the
 actual wallpaper images.
 
 ## How the generator works
@@ -177,6 +180,19 @@ since Omarchy iterates fast.
   local "Omarchy" theme (`omarchy-theme-set-vscode`). A theme that ships its own
   `vscode-theme.json` keeps it: the file survives the install filter, and the
   template step never overwrites a file already staged.
+- **Hook ordering:** `omarchy-theme-set` runs `omarchy-theme-set-vscode` inside
+  `run_parallel`, which waits for every job, and only then calls
+  `omarchy-hook theme-set <slug>`. A `theme-set` hook therefore always sees
+  `workbench.colorTheme` already set to "Omarchy". This is what
+  `tools/omarchy-hooks/beacon-vscode.sh` relies on to switch VS Code to
+  "Beacon Dark" and friends live, when the `beacon-themes` extension is
+  installed. A theme cannot install a hook for the user. Validated live on
+  2026-09-14: Beacon-to-Beacon switches apply with no reload.
+- **Detect VS Code extensions through `extensions.json`, not folders.** A
+  running VS Code leaves an uninstalled extension's folder on disk until it
+  restarts. The first version of the hook checked the folder, and after an
+  uninstall it named "Beacon Light", a theme that no longer existed. The hook
+  now asks the registry with `jq`, with a `grep` fallback.
 - **Missing `colors.toml` keys fall back silently.** `omarchy-theme-color`
   substitutes `yellow` for a missing `orange`, among others. Run
   `omarchy-theme-color --file colors.toml --all` to see what templates receive.
@@ -265,8 +281,16 @@ to 36–284 KB per image, 2.2 MB for all 24. Compared on the same image:
   about hue 150 to 155–160, into the edge of the audit's rough teal band
   (1.2–1.5% of pixels). They still read as green, and tritan divergence did
   not move. Not a policy breach, but check it if those images are redone.
-- A few faint smudge-like artefacts are visible only when zoomed in a long way.
-  The user plans to touch these up by hand. Re-audit after any edit.
+- **Hand touch-up (done, 2026-09-14).** The upscaler left faint smudges and
+  several colours sharing areas that should be one flat colour. The user
+  cleaned all 24 in GIMP, exported at 4:4:4 chroma subsampling. The colours
+  covering 98% of each image dropped sharply (for example 124 to 42 on
+  Red-Green Dark desert, 25 to 3 on ocean moonrise), and flat-area noise fell
+  everywhere. The re-audit still passes: centre third 0.00%, divergence at most
+  3.59, largest regional drift 1.075:1, which comes from the cleanup itself.
+  The teal-band pixels in Blue-Yellow Dark 01 and 04 fell to 0.8–0.9%.
+  **Export edits at 4:4:4:** the default 4:2:0 blurs colour along the edges of
+  saturated shapes.
 
 **Papercut, not photographs.** Nature was the user's direction. Realistic
 grass, leaves, star fields and water are the fine repeating detail the visual
@@ -354,8 +378,6 @@ Recorded so they are not relitigated.
 4. Before going public: one `omarchy theme install` per theme from GitHub.
    All six already install cleanly from local `file://` subtree splits with no
    dropped files, so this only confirms the published repos.
-5. Hand touch-up of the faint upscaling smudges in the wallpapers (user). Re-run
-   the centre, hue and divergence audit on every edited file.
 
 ## Testing findings worth keeping
 

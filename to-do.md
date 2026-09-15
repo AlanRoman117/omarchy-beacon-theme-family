@@ -29,8 +29,10 @@ Allowing photos would mean rethinking the visual-stress rule first.
       `09-beacon-rg-dark-desert-blue-hour.jpg`, and put them in one folder.
 - [x] Upscale. Done with Upscayl `digital-art-4x`, resized to 2560x1440 at
       JPEG quality 90, and re-audited: all 24 still pass.
-- [ ] Touch up the faint smudge-like upscaling artefacts (only visible when
-      zoomed in a long way), then ask Claude to re-audit the edited files.
+- [x] Touch up the faint smudge-like upscaling artefacts, then re-audit. Done:
+      all 24 cleaned in GIMP and re-audited, and all pass. Optional: a few
+      faint lighter blotches remain in the upper dune of Red-Green Dark 01,
+      visible only at 1:1.
 - [x] Ask Claude to audit them: centre third, hue policy, CVD model divergence,
       and a look at every image. Check the dark greens and plums in 17–20 by
       eye, because they pass the 20% luminance number even when they sit in the
@@ -193,6 +195,45 @@ Flat papercut illustration style: large simple shapes, solid matte colour, hard 
 ```
 24 Terraced hills at sunrise. Solid warm cream sky (#FAF9F6). Layered green terraced hills in sage, mid green and deep green, confined to the bottom fifth of the frame. A vermilion sun disc in the top-right corner. Only vermilion, green, magenta, amber and cream. No blue, no teal, no cyan anywhere.
 ```
+
+## VS Code extension
+
+Goal: no more **Developer: Reload Window** after switching Omarchy themes.
+`tools/vscode_extension.py` builds all six themes as one extension with their
+own names, and `tools/omarchy-hooks/beacon-vscode.sh` switches VS Code to the
+matching one after Omarchy's own VS Code step.
+
+- [x] Build the extension (`vscode-extension/`, placeholder publisher
+      `beacon-local`) and the hook. Hook logic tested against a fake home: it
+      switches only for Beacon themes with the extension installed, and leaves
+      other themes, hand-picked themes and skip toggles alone.
+- [x] Package the `.vsix` (`npx @vscode/vsce package`), install it, install the
+      hook, and confirm live switching while watching VS Code. **Passed
+      2026-09-14:** Beacon-to-Beacon switches apply live with no reload and no
+      flash; Osaka Jade still gets Ocean Green; uninstalling the extension
+      falls back to "Omarchy".
+- [ ] When the extension is published: update the reload notes in the
+      per-theme READMEs (`tools/theme_readmes.py`) and the root README to say
+      "install the extension and the hook". Doing it before publishing would
+      point users at an extension they cannot get yet.
+
+### Publishing, only after validation
+
+- [ ] Choose the permanent publisher ID (AlanRoman117 matches the GitHub remote).
+- [ ] VS Code Marketplace: Microsoft account, Azure DevOps organisation, a
+      Personal Access Token with **Marketplace: Manage** scope for all
+      organisations, create the publisher at
+      marketplace.visualstudio.com/manage, then `npx @vscode/vsce publish`.
+- [ ] Open VSX (VSCodium and Cursor): Eclipse account linked to GitHub, sign
+      the publisher agreement, create a namespace, get a token, then
+      `npx ovsx publish`.
+- [ ] Make the repo public first. vsce rewrites relative README links and
+      images to GitHub, and rejects SVG images.
+- [ ] Decide where users get the hook: inside each theme repo (on disk after
+      `omarchy theme install`, but a script in a colour-only theme) or the
+      family repo with a download command.
+- [ ] Bump `VERSION` in `tools/vscode_extension.py` whenever a palette or the VS
+      Code mapping changes, and add a publish script next to `publish.sh`.
 
 ## Other open items
 

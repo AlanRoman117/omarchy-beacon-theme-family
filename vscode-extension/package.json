@@ -1,0 +1,68 @@
+{
+  "name": "beacon-themes",
+  "displayName": "Beacon",
+  "description": "High-contrast themes solved for WCAG AAA, with red-green and blue-yellow safe variants for colour vision deficiency.",
+  "version": "0.1.0",
+  "publisher": "beacon-local",
+  "license": "MIT",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "high contrast",
+    "low vision",
+    "colour vision deficiency",
+    "color blind",
+    "protanopia",
+    "deuteranopia",
+    "tritanopia",
+    "wcag",
+    "omarchy"
+  ],
+  "galleryBanner": {
+    "color": "#10141A",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOURNAME/omarchy-beacon-theme-family.git"
+  },
+  "contributes": {
+    "themes": [
+      {
+        "label": "Beacon Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/beacon-dark.json"
+      },
+      {
+        "label": "Beacon Red-Green Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/beacon-redgreen-dark.json"
+      },
+      {
+        "label": "Beacon Blue-Yellow Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/beacon-blueyellow-dark.json"
+      },
+      {
+        "label": "Beacon Light",
+        "uiTheme": "vs",
+        "path": "./themes/beacon-light.json"
+      },
+      {
+        "label": "Beacon Red-Green Light",
+        "uiTheme": "vs",
+        "path": "./themes/beacon-redgreen-light.json"
+      },
+      {
+        "label": "Beacon Blue-Yellow Light",
+        "uiTheme": "vs",
+        "path": "./themes/beacon-blueyellow-light.json"
+      }
+    ]
+  }
+}
